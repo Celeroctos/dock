@@ -1,12 +1,20 @@
+package Core;
+
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.zip.GZIPInputStream;
 
 public class RequestManager {
+
+    static {
+        System.setProperty("http.agent", "");
+    }
 
     public static interface Callback {
         public void success(String response);
@@ -43,10 +51,10 @@ public class RequestManager {
 
         // Build get url link
         for (Map.Entry<String, Object> i : data.entrySet()) {
-            url += i.getKey() + "=" + i.getValue().toString();
+            url += i.getKey() + "=" + i.getValue().toString() + "&";
         }
         if (data.size() > 0) {
-            url = url.substring(url.length() - 1);
+            url = url.substring(0, url.length() - 1);
         }
 
         // Create url with link
@@ -57,20 +65,26 @@ public class RequestManager {
 
         // Get request method and property
         httpURLConnection.setRequestMethod("GET");
-        httpURLConnection.setRequestProperty("User-Agent", USER_AGENT);
+        httpURLConnection.addRequestProperty("User-Agent", USER_AGENT);
 
         // Get response code
         int responseCode = httpURLConnection.getResponseCode();
 
+        InputStream inputStream = httpURLConnection.getInputStream();
+
+        if("gzip".equals(httpURLConnection.getContentEncoding())){
+            inputStream = new GZIPInputStream(inputStream);
+        }
+
         BufferedReader bufferedReader = new BufferedReader(
-            new InputStreamReader(httpURLConnection.getInputStream())
+            new InputStreamReader(inputStream)
         );
         StringBuilder response = new StringBuilder();
         String line;
 
         // Read response
         while ((line = bufferedReader.readLine()) != null) {
-            response.append(line);
+            response.append(line + "\n");
         }
         bufferedReader.close();
 
@@ -87,7 +101,7 @@ public class RequestManager {
             urlParameters += i.getKey() + "=" + i.getValue().toString();
         }
         if (data.size() > 0) {
-            urlParameters = urlParameters.substring(urlParameters.length() - 1);
+            urlParameters = urlParameters.substring(0, urlParameters.length() - 1);
         }
 
         // Create url with link
@@ -129,5 +143,5 @@ public class RequestManager {
         return response.toString();
     }
 
-    private static final String USER_AGENT = "Mozilla/5.0";
+    private static final String USER_AGENT = "Mozilla/5.0 (Windows NT 6.1; WOW64; rv:25.0) Gecko/20100101 Firefox/25.0";
 }
