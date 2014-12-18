@@ -1,10 +1,8 @@
-package Core;
-
 import java.io.InputStream;
 import java.nio.ByteBuffer;
 import java.util.HashMap;
 
-public abstract class Node<K, N extends Node> implements Receivable {
+public abstract class Node<K, N extends Node> {
 
     public Node(Machine machine, Receiver receiver, String name, int length) {
         this.machine = machine;
@@ -15,7 +13,6 @@ public abstract class Node<K, N extends Node> implements Receivable {
 
     public abstract boolean parse(ByteBuffer buffer) throws Exception;
 
-    @Override
     public ByteBuffer receive() throws Exception{
 
         assert receiver != null;

@@ -1,5 +1,3 @@
-package Core;
-
 public class Package {
 
     public Package(Machine machine, Receiver receiver) {
