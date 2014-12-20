@@ -1,7 +1,7 @@
 {
   "name": "MEK7222",
   "protocol": {
-    "name": "tcp/ip",
+    "name": "TCP/IP",
     "send": {
       "host": "127.0.0.1",
       "port": 1200
@@ -18,11 +18,11 @@
         {
           "name": "length",
           "length": 6,
-          "type": "int"
+          "cast": "int"
         }, {
           "name": "format",
           "length": 2,
-          "type": "int"
+          "cast": "int"
         }
       ]
     }, {
@@ -32,16 +32,16 @@
         {
           "name": "format-id",
           "length": 2,
-          "type": "int",
+          "cast": "int",
           "fixed": 10
         }, {
           "name": "order-id",
           "length": 10,
-          "type": "int"
+          "cast": "int"
         }, {
           "name": "command",
           "length": 1,
-          "type": "int"
+          "cast": "int"
         }, {
           "reference": "order-information-common"
         }
@@ -53,16 +53,16 @@
         {
           "name": "format-id",
           "length": 2,
-          "type": "int",
+          "cast": "int",
           "fixed": 11
         }, {
           "name": "order-id",
           "length": 10,
-          "type": "int"
+          "cast": "int"
         }, {
           "name": "status",
           "length": 1,
-          "type": "int",
+          "cast": "int",
           "fixed": 0
         }
       ]
@@ -73,16 +73,16 @@
         {
           "name": "format-id",
           "length": 2,
-          "type": "int",
+          "cast": "int",
           "fixed": 12
         }, {
           "name": "order-id",
           "length": 10,
-          "type": "int"
+          "cast": "int"
         }, {
           "name": "error-code",
           "length": 1,
-          "type": "int"
+          "cast": "int"
         }
       ]
     }, {
@@ -92,16 +92,16 @@
         {
           "name": "format-id",
           "length": 2,
-          "type": "int",
+          "cast": "int",
           "fixed": 20
         }, {
           "name": "order-id",
           "length": 10,
-          "type": "int"
+          "cast": "int"
         }, {
           "name": "command",
           "length": 1,
-          "type": "string"
+          "cast": "string"
         }, {
           "reference": "order-information-common"
         }, {
@@ -117,16 +117,16 @@
         {
           "name": "format-id",
           "length": 2,
-          "type": "int",
+          "cast": "int",
           "fixed": 21
         }, {
           "name": "order-id",
           "length": 10,
-          "type": "int"
+          "cast": "int"
         }, {
           "name": "status",
           "length": 1,
-          "type": "int",
+          "cast": "int",
           "fixed": 0
         }
       ]
@@ -137,16 +137,16 @@
         {
           "name": "format-id",
           "length": 2,
-          "type": "int",
+          "cast": "int",
           "fixed": 22
         }, {
           "name": "order-id",
           "length": 10,
-          "type": "int"
+          "cast": "int"
         }, {
           "name": "error-code",
           "length": 1,
-          "type": "int"
+          "cast": "int"
         }
       ]
     }, {
@@ -156,70 +156,70 @@
         {
           "name": "order-number",
           "length": 10,
-          "type": "int"
+          "cast": "int"
         }, {
           "name": "order-date",
           "length": 12,
-          "type": "timestamp"
+          "cast": "timestamp"
         }, {
           "name": "patient-name",
           "length": 26
         }, {
           "name": "patient-sex",
           "length": 1,
-          "type": "int"
+          "cast": "int"
         }, {
           "name": "patient-age",
           "length": 8,
-          "type": "date"
+          "cast": "date"
         }, {
           "name": "order-request-person-name",
           "length": 26,
-          "type": "string"
+          "cast": "string"
         }, {
           "name": "ward-name",
           "length": 13,
-          "type": "string"
+          "cast": "string"
         }, {
           "name": "order-request-department-name",
           "length": 13,
-          "type": "string"
+          "cast": "string"
         }, {
           "name": "blood-sample-date",
           "length": 12,
-          "type": "timestamp"
+          "cast": "timestamp"
         }, {
           "name": "order-entry-date",
           "length": 12,
-          "type": "timestamp"
+          "cast": "timestamp"
         }, {
           "name": "patient-id",
           "length": 13,
-          "type": "string"
+          "cast": "string"
         }, {
           "name": "measurement-parameter-group-number",
           "length": 1,
-          "type": "int"
+          "cast": "int"
         }, {
           "name": "normal-range-table-number",
           "length": 1,
-          "type": "int"
+          "cast": "int"
         }, {
           "name": "person-in-charge",
           "length": 26,
-          "type": "string"
+          "cast": "string"
         }, {
           "name": "laboratory-number",
           "length": 4,
-          "type": "int"
+          "cast": "int"
         }, {
           "name": "comment",
           "length": 128,
-          "type": "string"
+          "cast": "string"
         }, {
           "name": "reserved",
           "length": 51,
-          "type": "reserved"
+          "cast": "reserved"
         }
       ]
     }, {
@@ -229,19 +229,19 @@
         {
           "name": "serial",
           "length": 4,
-          "type": "string"
+          "cast": "string"
         }, {
           "name": "model",
           "length": 10,
-          "type": "int"
+          "cast": "int"
         }, {
           "name": "version",
           "length": 8,
-          "type": "int"
+          "cast": "int"
         }, {
           "name": "reserved",
           "length": 42,
-          "type": "reserved"
+          "cast": "reserved"
         }
       ]
     }, {
@@ -251,323 +251,323 @@
         {
           "name": "id",
           "length": 13,
-          "type": "string"
+          "cast": "string"
         }, {
           "name": "measurement-date",
           "length": 8,
-          "type": "date"
+          "cast": "date"
         }, {
           "name": "measurement-time",
           "length": 6,
-          "type": "time"
+          "cast": "time"
         }, {
           "name": "sampling-method",
           "length": 1,
-          "type": "int"
+          "cast": "int"
         }, {
           "name": "measurement-parameter-group-number",
           "length": 1,
-          "type": "int"
+          "cast": "int"
         }, {
           "name": "normal-range-table-number",
           "length": 1,
-          "type": "int"
+          "cast": "int"
         }, {
           "name": "rack-position-number",
           "length": 3,
-          "type": "string"
+          "cast": "string"
         }, {
           "name": "operator-name",
           "length": 8,
-          "type": "string"
+          "cast": "string"
         }, {
           "name": "sequence-number",
           "length": 7,
-          "type": "string"
+          "cast": "string"
         }, {
           "name": "reserved",
           "length": 16,
-          "type": "reserved"
+          "cast": "reserved"
         }, {
           "name": "wbc-level",
           "length": 6,
-          "type": "string"
+          "cast": "string"
         }, {
           "name": "wbc-unit",
           "length": 8,
-          "type": "string"
+          "cast": "string"
         }, {
           "name": "relative-neutrophils-level",
           "length": 6,
-          "type": "string"
+          "cast": "string"
         }, {
           "name": "relative-neutrophils-unit",
           "length": 8,
-          "type": "string"
+          "cast": "string"
         }, {
           "name": "relative-lymphocytes-level",
           "length": 6,
-          "type": "string"
+          "cast": "string"
         }, {
           "name": "relative-lymphocytes-unit",
           "length": 8,
-          "type": "string"
+          "cast": "string"
         }, {
           "name": "relative-monocytes-level",
           "length": 6,
-          "type": "string"
+          "cast": "string"
         }, {
           "name": "relative-monocytes-unit",
           "length": 8,
-          "type": "string"
+          "cast": "string"
         }, {
           "name": "relative-eosinophils-level",
           "length": 6,
-          "type": "string"
+          "cast": "string"
         }, {
           "name": "relative-eosinophils-unit",
           "length": 8,
-          "type": "string"
+          "cast": "string"
         }, {
           "name": "relative-basophils-level",
           "length": 6,
-          "type": "string"
+          "cast": "string"
         }, {
           "name": "relative-basophils-unit",
           "length": 8,
-          "type": "string"
+          "cast": "string"
         }, {
           "name": "absolute-neutrophils-level",
           "length": 6,
-          "type": "string"
+          "cast": "string"
         }, {
           "name": "absolute-neutrophils-unit",
           "length": 8,
-          "type": "string"
+          "cast": "string"
         }, {
           "name": "absolute-lymphocytes-level",
           "length": 6,
-          "type": "string"
+          "cast": "string"
         }, {
           "name": "absolute-lymphocytes-unit",
           "length": 8,
-          "type": "string"
+          "cast": "string"
         }, {
           "name": "absolute-monocytes-level",
           "length": 6,
-          "type": "string"
+          "cast": "string"
         }, {
           "name": "absolute-monocytes-unit",
           "length": 8,
-          "type": "string"
+          "cast": "string"
         }, {
           "name": "absolute-eosinophils-level",
           "length": 6,
-          "type": "string"
+          "cast": "string"
         }, {
           "name": "absolute-eosinophils-unit",
           "length": 8,
-          "type": "string"
+          "cast": "string"
         }, {
           "name": "absolute-basophils-level",
           "length": 6,
-          "type": "string"
+          "cast": "string"
         }, {
           "name": "absolute-basophils-unit",
           "length": 8,
-          "type": "string"
+          "cast": "string"
         }, {
           "name": "rbc-level",
           "length": 6,
-          "type": "string"
+          "cast": "string"
         }, {
           "name": "rbc-unit",
           "length": 8,
-          "type": "string"
+          "cast": "string"
         }, {
           "name": "hgb-level",
           "length": 6,
-          "type": "string"
+          "cast": "string"
         }, {
           "name": "hgb-unit",
           "length": 8,
-          "type": "string"
+          "cast": "string"
         }, {
           "name": "hct-level",
           "length": 6,
-          "type": "string"
+          "cast": "string"
         }, {
           "name": "hct-unit",
           "length": 8,
-          "type": "string"
+          "cast": "string"
         }, {
           "name": "mcv-level",
           "length": 6,
-          "type": "string"
+          "cast": "string"
         }, {
           "name": "mcv-unit",
           "length": 8,
-          "type": "string"
+          "cast": "string"
         }, {
           "name": "mch-level",
           "length": 6,
-          "type": "string"
+          "cast": "string"
         }, {
           "name": "mch-unit",
           "length": 8,
-          "type": "string"
+          "cast": "string"
         }, {
           "name": "mchc-level",
           "length": 6,
-          "type": "string"
+          "cast": "string"
         }, {
           "name": "mchc-unit",
           "length": 8,
-          "type": "string"
+          "cast": "string"
         }, {
           "name": "rdw-level",
           "length": 6,
-          "type": "string"
+          "cast": "string"
         }, {
           "name": "rdw-unit",
           "length": 8,
-          "type": "string"
+          "cast": "string"
         }, {
           "name": "plt-level",
           "length": 6,
-          "type": "string"
+          "cast": "string"
         }, {
           "name": "plt-unit",
           "length": 8,
-          "type": "string"
+          "cast": "string"
         }, {
           "name": "pct-level",
           "length": 6,
-          "type": "string"
+          "cast": "string"
         }, {
           "name": "pct-unit",
           "length": 8,
-          "type": "string"
+          "cast": "string"
         }, {
           "name": "mpv-level",
           "length": 6,
-          "type": "string"
+          "cast": "string"
         }, {
           "name": "mpv-unit",
           "length": 8,
-          "type": "string"
+          "cast": "string"
         }, {
           "name": "pdw-level",
           "length": 6,
-          "type": "string"
+          "cast": "string"
         }, {
           "name": "pdw-unit",
           "length": 8,
-          "type": "string"
+          "cast": "string"
         }, {
           "name": "reserved",
           "length": 84,
-          "type": "reserved"
+          "cast": "reserved"
         }, {
           "name": "leukocytosis-flag",
           "length": 1,
-          "type": "int"
+          "cast": "int"
         }, {
           "name": "leukopenia-flag",
           "length": 1,
-          "type": "int"
+          "cast": "int"
         }, {
           "name": "neutrophilia-flag",
           "length": 1,
-          "type": "int"
+          "cast": "int"
         }, {
           "name": "neutropenia-flag",
           "length": 1,
-          "type": "int"
+          "cast": "int"
         }, {
           "name": "lymphocytosis-flag",
           "length": 1,
-          "type": "int"
+          "cast": "int"
         }, {
           "name": "lymphopenia-flag",
           "length": 1,
-          "type": "int"
+          "cast": "int"
         }, {
           "name": "monocytosis-flag",
           "length": 1,
-          "type": "int"
+          "cast": "int"
         }, {
           "name": "eosinophilia-flag",
           "length": 1,
-          "type": "int"
+          "cast": "int"
         }, {
           "name": "basophilia-flag",
           "length": 1,
-          "type": "int"
+          "cast": "int"
         }, {
           "name": "blasts-flag",
           "length": 1,
-          "type": "int"
+          "cast": "int"
         }, {
           "name": "immature-granulocytes-flag",
           "length": 1,
-          "type": "int"
+          "cast": "int"
         }, {
           "name": "left-shift-flag",
           "length": 1,
-          "type": "int"
+          "cast": "int"
         }, {
           "name": "atypical-lymphocytes-flag",
           "length": 1,
-          "type": "int"
+          "cast": "int"
         }, {
           "name": "wbc-hemolysing-error-flag",
           "length": 1,
-          "type": "int"
+          "cast": "int"
         }, {
           "name": "erythrocytosis-flag",
           "length": 1,
-          "type": "int"
+          "cast": "int"
         }, {
           "name": "anemia-flag",
           "length": 1,
-          "type": "int"
+          "cast": "int"
         }, {
           "name": "anisocytosis-flag",
           "length": 1,
-          "type": "int"
+          "cast": "int"
         }, {
           "name": "microcytosis-flag",
           "length": 1,
-          "type": "int"
+          "cast": "int"
         }, {
           "name": "macrocystosis-flag",
           "length": 1,
-          "type": "int"
+          "cast": "int"
         }, {
           "name": "hypochromia-flag",
           "length": 1,
-          "type": "int"
+          "cast": "int"
         }, {
           "name": "mchc-flag",
           "length": 1,
-          "type": "int"
+          "cast": "int"
         }, {
           "name": "thrombocytosis-flag",
           "length": 1,
-          "type": "int"
+          "cast": "int"
         }, {
           "name": "thrombocytopenia-flag",
           "length": 1,
-          "type": "int"
+          "cast": "int"
         }, {
           "name": "plt-clumps-flag",
           "length": 1,
-          "type": "int"
+          "cast": "int"
         }, {
           "name": "reserved-flag",
           "length": 32,
-          "type": "reserved"
+          "cast": "reserved"
         }
       ]
     }

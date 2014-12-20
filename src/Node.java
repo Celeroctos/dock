@@ -1,9 +1,12 @@
 import java.util.HashMap;
 
-public abstract class Node<N extends Node> {
+public class Node<N extends Node> {
 
-    public Node(String name) {
+    public Node(String name, String cast, int length, int max) {
         this.name = name;
+        this.cast = cast;
+        this.length = length;
+        this.max = max;
     }
 
     public void add(String key, N node) throws Exception {
@@ -40,12 +43,44 @@ public abstract class Node<N extends Node> {
         nodeMap.remove(key);
     }
 
+    public Node root() {
+
+        Node node = this;
+
+        while (node.parent != null) {
+            node = node.parent;
+        }
+
+        return node;
+    }
+
     public String getName() {
         return name;
+    }
+
+    public Node getParent() {
+        return parent;
+    }
+
+    public String getCast() {
+        return cast;
+    }
+
+    public int getMax() {
+        return max;
+    }
+
+    public int getLength() {
+        return length;
     }
 
     private HashMap<String, N> nodeMap
             = new HashMap<String, N>();
 
+    private Node parent = null;
     private String name;
+    private String cast;
+
+    private int max;
+    private int length;
 }

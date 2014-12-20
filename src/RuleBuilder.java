@@ -1,7 +1,7 @@
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-public class RuleBuilder extends Builder {
+public class RuleBuilder extends Builder implements HasProtocol {
 
     public RuleBuilder(Machine machine) {
         super(machine);
@@ -10,37 +10,53 @@ public class RuleBuilder extends Builder {
     @Override
     public void build() throws Exception {
 
-        JSONObject root = new JSONObject(
+        JSONObject json = new JSONObject(
             getMachine().getLoader().getJson()
         );
 
-        JSONArray array = root.getJSONArray("data");
-
-        int packLength = 0;
-
-        for (int i = 0; i < array.length(); i++) {
-            if (array.getJSONObject(i).has("max")) {
-                packLength += array.getJSONObject(i).getInt("max");
-            }
+        if (!json.has("name")) {
+            throw new Exception("Unable to find key (name) in root node");
         }
 
-        build(root);
+        root = new Node(json.getString("name"), null, -1, -1);
+
+        if (!json.has("protocol")) {
+            throw new Exception("Unable to find key (protocol) in root node");
+        }
+
+        JSONObject protocolNode = json.getJSONObject("protocol");
+
+        if (!protocolNode.has("name")) {
+            throw new Exception("Unable to find key (name) in protocol node");
+        }
+
+        protocol = protocolNode.getString("name");
+
+        if (!json.has("data")) {
+            throw new Exception("Unable to find key (data) in root node");
+        }
+
+        JSONArray data = json.getJSONArray("data");
+
+        for (int i = 0; i < data.length(); i++) {
+            build(data.getJSONObject(i));
+        }
     }
 
     private boolean build(JSONObject root) {
 
         String name = null;
-        String type = null;
+        String cast = null;
 
-        int length = 0;
+        int length = -1;
         int max = -1;
 
         if (root.has("name")) {
             name = root.getString("name");
         }
 
-        if (root.has("type")) {
-            type = root.getString("type");
+        if (root.has("cast")) {
+            cast = root.getString("cast");
         }
 
         if (root.has("length")) {
@@ -51,7 +67,9 @@ public class RuleBuilder extends Builder {
             max = root.getInt("max");
         }
 
-        System.out.format(" + %s %s %d %d\n", name, type, length, max);
+        Node node = new Node(
+            name, cast, length, max
+        );
 
         if (!root.has("data")) {
             return false;
@@ -65,4 +83,16 @@ public class RuleBuilder extends Builder {
 
         return true;
     }
+
+    @Override
+    public String getProtocol() throws Exception {
+        return protocol;
+    }
+
+    public Node getRoot() {
+        return root;
+    }
+
+    private String protocol = null;
+    private Node root = null;
 }

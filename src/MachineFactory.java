@@ -1,7 +1,7 @@
 
-public class Factory {
+public class MachineFactory {
 
-    private Factory() {
+    private MachineFactory() {
         /* Locked */
     }
 
@@ -9,7 +9,7 @@ public class Factory {
      * Get singleton factory instance
      * @return - Factory instance
      */
-    public static Factory getFactory() {
+    public static MachineFactory getFactory() {
         return factory;
     }
 
@@ -22,12 +22,15 @@ public class Factory {
 
         Machine machine = new Machine("MEK7222");
 
+        // Load rules for MEK7222
         machine.getLoader().load();
+
+        // Build node tree via parsed JSON
         machine.getBuilder().build();
 
         return machine;
     }
 
-    private static Factory factory
-            = new Factory();
+    private static MachineFactory factory
+            = new MachineFactory();
 }

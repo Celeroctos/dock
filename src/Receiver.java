@@ -10,7 +10,7 @@ public class Receiver implements HasProtocol {
 
     @Override
     public String getProtocol() {
-        return "tcp/ip";
+        return "TCP/IP";
     }
 
     public void connect(String host, int port) throws Exception {
