@@ -1,46 +1,37 @@
-import java.io.File;
-import java.io.FileInputStream;
 
-public class Loader {
+public abstract class Loader {
 
+    /**
+     * Construct loader with your machine instance
+     * @param machine - Reference to machine
+     */
     public Loader(Machine machine) {
         this.machine = machine;
     }
 
-    public void load() throws Exception {
+    /**
+     * Implement that method to load some specific data from
+     * filesystem, similar to receiver and builder
+     * @throws Exception
+     */
+    public abstract void load() throws Exception;
 
-        handle = new File(Config.RULE_PATH + machine.getName() + Config.RULE_EXTENSION);
+    /**
+     * Every loader have to load data from somewhere, so implement
+     * that method to show from which relative path loader have
+     * to load data
+     * @return - Path to loader's data
+     * @throws Exception
+     */
+    public abstract String getFolder() throws Exception;
 
-        if (!handle.exists()) {
-            throw new Exception("Rule file doesn't exists (" + machine.getName() + ")");
-        }
-
-        byte[] bytes = new byte[(int) handle.length()];
-
-        FileInputStream stream = new FileInputStream(handle);
-
-        if (stream.read(bytes) != bytes.length) {
-            throw new Exception("Can't read (" + bytes.length + ") from rule file");
-        }
-
-        stream.close();
-
-        json = new String(bytes);
-    }
-
+    /**
+     * Get loader's machine instance
+     * @return - Machine's instance
+     */
     public Machine getMachine() {
         return machine;
     }
 
-    public File getHandle() {
-        return handle;
-    }
-
-    public String getJson() {
-        return json;
-    }
-
-    private File handle;
     private Machine machine;
-    private String json;
 }

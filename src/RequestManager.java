@@ -15,7 +15,7 @@ public class RequestManager {
     }
 
     public static interface Callback {
-        public void success(String response);
+        public void ok(String response);
         public void error(Exception e);
     }
 
@@ -24,7 +24,7 @@ public class RequestManager {
             @Override
             public void run() {
                 try {
-                    callback.success(sendGet(url, data));
+                    callback.ok(sendGet(url, data));
                 } catch (Exception e) {
                     callback.error(e);
                 }
@@ -37,7 +37,7 @@ public class RequestManager {
             @Override
             public void run() {
                 try {
-                    callback.success(sendPost(url, data));
+                    callback.ok(sendPost(url, data));
                 } catch (Exception e) {
                     callback.error(e);
                 }

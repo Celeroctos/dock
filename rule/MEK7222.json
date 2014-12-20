@@ -1,5 +1,16 @@
 {
   "name": "MEK7222",
+  "protocol": {
+    "name": "tcp/ip",
+    "send": {
+      "host": "127.0.0.1",
+      "port": 1200
+    },
+    "receive": {
+      "host": "127.0.0.1",
+      "port": 1100
+    }
+  },
   "data": [
     {
       "name": "outline",

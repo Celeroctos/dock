@@ -1,26 +1,52 @@
+
 public class Machine {
 
+    /**
+     * Construct machine instance with it's name, it can be used later,
+     * for example, to load config files or receive data from specific
+     * source, etc
+     * @param name - Machine's name
+     */
     public Machine(String name) {
         this.name = name;
     }
 
-    public Loader getLoader() {
+    /**
+     * @return - Receiver
+     */
+    public Receiver getReceiver() {
+        return receiver;
+    }
+
+    /**
+     * @return - Loader
+     */
+    public RuleLoader getLoader() {
         return loader;
     }
 
-    public Builder getBuilder() {
+    /**
+     * @return - Builder
+     */
+    public RuleBuilder getBuilder() {
         return builder;
     }
 
+    /**
+     * @return - Name
+     */
     public String getName() {
         return name;
     }
 
-    private Loader loader
-        = new Loader(this);
+    private Receiver receiver
+        = new Receiver(this);
 
-    private Builder builder
-        = new Builder(this);
+    private RuleLoader loader
+        = new RuleLoader(this);
+
+    private RuleBuilder builder
+        = new RuleBuilder(this);
 
     private String name;
 }
