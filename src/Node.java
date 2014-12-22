@@ -1,15 +1,26 @@
-import java.util.HashMap;
+import com.sun.deploy.util.StringUtils;
 
-public class Node<N extends Node> {
+import java.util.Collection;
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
-    public Node(String name, String cast, int length, int max) {
+public class Node implements Cloneable {
+
+    public Node(Node parent, String name, String cast, int length, int max) {
+        this.parent = parent;
         this.name = name;
         this.cast = cast;
         this.length = length;
         this.max = max;
     }
 
-    public void add(String key, N node) throws Exception {
+    public void add(Node node) throws Exception {
+        add(node.getName(), node);
+    }
+
+    public void add(String key, Node node) throws Exception {
 
         assert key != null;
         assert node != null;
@@ -21,7 +32,7 @@ public class Node<N extends Node> {
         nodeMap.put(key, node);
     }
 
-    public N get(String key) throws Exception {
+    public Node get(String key) throws Exception {
 
         assert key != null;
 
@@ -43,6 +54,90 @@ public class Node<N extends Node> {
         nodeMap.remove(key);
     }
 
+    @Override
+    public Node clone() throws CloneNotSupportedException {
+
+        try {
+            super.clone();
+        } catch (CloneNotSupportedException ignored) {
+        }
+
+        try {
+            return clone(null);
+        } catch (Exception ignored) {
+            return null;
+        }
+    }
+
+    public Node clone(Node parent) throws Exception {
+
+        Node node = new Node(parent,
+            getName(),
+            getCast(),
+            getLength(),
+            getMax()
+        );
+
+        for (Node n : node.nodeMap.values()) {
+            try {
+                node.add(n.getName(), n.clone(node));
+            } catch (Exception ignored) {
+            }
+        }
+
+        return node;
+    }
+
+    public Node find(String path) throws Exception {
+
+        int index = path.indexOf('/');
+
+        String name;
+        Node node;
+
+        if (index >= 0) {
+            name = path.substring(0, index);
+        } else {
+            name = path;
+        }
+
+        if (name.matches("\\.\\[\\d\\]")) {
+
+            Matcher matcher = Pattern.compile("\\[(.*?)\\]")
+                .matcher(name.substring(1));
+
+            if (!matcher.find()) {
+                throw new Exception("No match found \"" + path + "\"");
+            }
+
+            int offset = Integer.parseInt(matcher.group(1));
+
+            if (offset < nodeMap.size()) {
+                node = (Node) nodeMap.values().toArray()[offset];
+            } else {
+                throw new Exception("Can't find node at index \"" + offset + "\" in \"" + this.getName() + "\"");
+            }
+
+            if (index < 0) {
+                return node;
+            }
+
+        } else {
+
+            if (index < 0) {
+                return get(path);
+            }
+
+            if (name.matches("\\.{2}")) {
+                node = parent;
+            } else {
+                node = get(name);
+            }
+        }
+
+        return node.find(path.substring(index + 1));
+    }
+
     public Node root() {
 
         Node node = this;
@@ -52,6 +147,10 @@ public class Node<N extends Node> {
         }
 
         return node;
+    }
+
+    public Collection<Node> values() {
+        return nodeMap.values();
     }
 
     public String getName() {
@@ -74,10 +173,10 @@ public class Node<N extends Node> {
         return length;
     }
 
-    private HashMap<String, N> nodeMap
-            = new HashMap<String, N>();
+    private Map<String, Node> nodeMap
+            = new LinkedHashMap<String, Node>();
 
-    private Node parent = null;
+    private Node parent;
     private String name;
     private String cast;
 

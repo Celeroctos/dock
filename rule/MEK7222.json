@@ -217,13 +217,12 @@
           "length": 128,
           "cast": "string"
         }, {
-          "name": "reserved",
           "length": 51,
           "cast": "reserved"
         }
       ]
     }, {
-      "name": "hematology-analyzer-information-common",
+      "name": "hematology-analyzer-information",
       "max": 64,
       "data": [
         {
@@ -239,7 +238,6 @@
           "length": 8,
           "cast": "int"
         }, {
-          "name": "reserved",
           "length": 42,
           "cast": "reserved"
         }
@@ -285,7 +283,6 @@
           "length": 7,
           "cast": "string"
         }, {
-          "name": "reserved",
           "length": 16,
           "cast": "reserved"
         }, {
@@ -465,7 +462,6 @@
           "length": 8,
           "cast": "string"
         }, {
-          "name": "reserved",
           "length": 84,
           "cast": "reserved"
         }, {

@@ -23,10 +23,10 @@ public class MachineFactory {
         Machine machine = new Machine("MEK7222");
 
         // Load rules for MEK7222
-        machine.getLoader().load();
+        machine.getRule().load();
 
         // Build node tree via parsed JSON
-        machine.getBuilder().build();
+        machine.getRule().build();
 
         return machine;
     }

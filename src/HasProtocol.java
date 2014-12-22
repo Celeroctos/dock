@@ -7,7 +7,6 @@ public interface HasProtocol {
      * in ProtocolCollection, for example receiver implements TCP/IP
      * protocol data transfer
      * @return - Name of your class's protocol, which it's implements
-     * @throws Exception
      */
-    public String getProtocol() throws Exception;
+    public String getProtocol();
 }
