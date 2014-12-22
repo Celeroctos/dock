@@ -25,7 +25,7 @@ public class MachineFactory {
         // Load rules for MEK7222
         machine.getRule().load();
 
-        // Build node tree via parsed JSON
+        // Build node tree with parsed rules
         machine.getRule().build();
 
         return machine;

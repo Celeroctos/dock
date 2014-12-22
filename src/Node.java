@@ -1,5 +1,3 @@
-import com.sun.deploy.util.StringUtils;
-
 import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -8,12 +6,13 @@ import java.util.regex.Pattern;
 
 public class Node implements Cloneable {
 
-    public Node(Node parent, String name, String cast, int length, int max) {
+    public Node(Node parent, String name, String cast, int length, int max, int fixed) {
         this.parent = parent;
         this.name = name;
         this.cast = cast;
         this.length = length;
         this.max = max;
+        this.fixed = fixed;
     }
 
     public void add(Node node) throws Exception {
@@ -30,6 +29,10 @@ public class Node implements Cloneable {
         }
 
         nodeMap.put(key, node);
+    }
+
+    public boolean has(String key) {
+        return key != null && nodeMap.containsKey(key);
     }
 
     public Node get(String key) throws Exception {
@@ -75,7 +78,8 @@ public class Node implements Cloneable {
             getName(),
             getCast(),
             getLength(),
-            getMax()
+            getMax(),
+            getFixed()
         );
 
         for (Node n : node.nodeMap.values()) {
@@ -101,7 +105,7 @@ public class Node implements Cloneable {
             name = path;
         }
 
-        if (name.matches("\\.\\[\\d\\]")) {
+        if (name.matches("\\.\\[\\d+\\]")) {
 
             Matcher matcher = Pattern.compile("\\[(.*?)\\]")
                 .matcher(name.substring(1));
@@ -149,7 +153,7 @@ public class Node implements Cloneable {
         return node;
     }
 
-    public Collection<Node> values() {
+    public Collection<Node> getChildren() {
         return nodeMap.values();
     }
 
@@ -170,7 +174,23 @@ public class Node implements Cloneable {
     }
 
     public int getLength() {
+
+        int nodeLength = 0;
+
+        if (length == -1) {
+
+            for (Node node : getChildren()) {
+                nodeLength += node.getLength();
+            }
+
+            length = nodeLength;
+        }
+
         return length;
+    }
+
+    public int getFixed() {
+        return fixed;
     }
 
     private Map<String, Node> nodeMap
@@ -182,4 +202,5 @@ public class Node implements Cloneable {
 
     private int max;
     private int length;
+    private int fixed;
 }

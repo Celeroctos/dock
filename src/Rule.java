@@ -14,36 +14,6 @@ public class Rule extends Loader {
         super(machine, "rule");
     }
 
-    private static class Reference {
-
-        /**
-         * Construct reference
-         * @param parent - Here will be nodes after clone
-         * @param name - Node name
-         */
-        public Reference(Node parent, String name) {
-            this.parent = parent;
-            this.name = name;
-        }
-
-        /**
-         * @return - Reference's parent
-         */
-        public Node getParent() {
-            return parent;
-        }
-
-        /**
-         * @return - Reference's name
-         */
-        public String getName() {
-            return name;
-        }
-
-        private Node parent;
-        private String name;
-    }
-
     /**
      * Implement that method to load some specific data from
      * filesystem, similar to receiver and builder
@@ -96,7 +66,7 @@ public class Rule extends Loader {
             throw new Exception("Unable to find key \"name\" in \"root\" node");
         }
 
-        root = new Node(null, json.getString("name"), null, -1, -1);
+        root = new Node(null, json.getString("name"), null, -1, -1, -1);
 
         if (!json.has("protocol")) {
             throw new Exception("Unable to find key \"protocol\" in \"root\" node");
@@ -134,6 +104,7 @@ public class Rule extends Loader {
 
         int length = -1;
         int max = -1;
+        int fixed = -1;
 
         if (json.has("reference")) {
             return references.add(new Reference(
@@ -163,8 +134,12 @@ public class Rule extends Loader {
             max = json.getInt("max");
         }
 
+        if (json.has("fixed")) {
+            fixed = json.getInt("fixed");
+        }
+
         Node node = new Node(
-            parent, name, cast, length, max
+            parent, name, cast, length, max, fixed
         );
 
         parent.add(node.getName(), node);
@@ -180,6 +155,36 @@ public class Rule extends Loader {
         }
 
         return true;
+    }
+
+    private static class Reference {
+
+        /**
+         * Construct reference
+         * @param parent - Here will be nodes after clone
+         * @param name - Node name
+         */
+        public Reference(Node parent, String name) {
+            this.parent = parent;
+            this.name = name;
+        }
+
+        /**
+         * @return - Reference's parent
+         */
+        public Node getParent() {
+            return parent;
+        }
+
+        /**
+         * @return - Reference's name
+         */
+        public String getName() {
+            return name;
+        }
+
+        private Node parent;
+        private String name;
     }
 
     private static String generateName() throws Exception {

@@ -21,7 +21,7 @@ public class Machine {
 
         if (receiver == null) {
             this.receiver = new Receiver(this);
-        } else{
+        } else        {
             this.receiver = receiver;
         }
 
