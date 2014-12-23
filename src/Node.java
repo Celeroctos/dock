@@ -1,3 +1,4 @@
+import java.nio.ByteBuffer;
 import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -203,14 +204,27 @@ public class Node implements Cloneable {
      * @return - Root node
      */
     public Node root() {
-
         Node node = this;
-
         while (node.parent != null) {
             node = node.parent;
         }
-
         return node;
+    }
+
+    /**
+     * Read nodes values from buffer
+     * @param buffer - Buffer with bytes to read
+     */
+    public void read(ByteBuffer buffer) {
+        if (getChildren().size() > 0) {
+            for (Node child : getChildren()) {
+                child.read(buffer);
+            }
+        } else {
+            byte[] bytes = new byte[getLength()];
+            buffer.get(bytes);
+            setValue(new String(bytes));
+        }
     }
 
     /**
@@ -253,18 +267,13 @@ public class Node implements Cloneable {
      * length, only if hasn't been set
      */
     public int getLength() {
-
         int nodeLength = 0;
-
         if (length == -1) {
-
             for (Node node : getChildren()) {
                 nodeLength += node.getLength();
             }
-
             length = nodeLength;
         }
-
         return length;
     }
 

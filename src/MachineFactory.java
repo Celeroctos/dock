@@ -59,9 +59,7 @@ public class MachineFactory {
                 int length = Integer.parseInt(new String(lengthBuffer));
                 int format = Integer.parseInt(new String(formatBuffer));
 
-                parse(buffer, root.get(formatMap.get(format)));
-
-
+                root.get(formatMap.get(format)).read(buffer);
             }
         });
 
