@@ -16,17 +16,14 @@ public abstract class Parser {
      * @throws Exception
      */
     public synchronized void parse(ByteBuffer buffer, Node node) throws Exception {
-
         if (node.getChildren().size() > 0) {
             for (Node child : node.getChildren()) {
                 parse(buffer, child);
             }
         } else {
-
             byte[] bytes = new byte[node.getLength()];
-
             buffer.get(bytes);
-
+            node.setValue(new String(bytes));
         }
     }
 }

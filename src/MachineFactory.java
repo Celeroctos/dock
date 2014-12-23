@@ -60,6 +60,8 @@ public class MachineFactory {
                 int format = Integer.parseInt(new String(formatBuffer));
 
                 parse(buffer, root.get(formatMap.get(format)));
+
+
             }
         });
 

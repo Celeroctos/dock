@@ -275,10 +275,25 @@ public class Node implements Cloneable {
         return fixed;
     }
 
+    /**
+     * @param value - Node's value after receive data
+     */
+    public void setValue(String value) {
+        this.value = value;
+    }
+
+    /**
+     * @return - Node's value after receive data
+     */
+    public String getValue() {
+        return value;
+    }
+
     private Map<String, Node> nodeMap
             = new LinkedHashMap<String, Node>();
 
     private Node parent;
+    private String value;
     private String name;
     private String cast;
 
