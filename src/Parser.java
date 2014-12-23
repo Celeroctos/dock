@@ -1,33 +1,32 @@
+import java.nio.ByteBuffer;
 
-public class Parser {
-
-    /**
-     * Construct parser with your machine instance
-     * @param machine - Reference to machine
-     */
-    public Parser(Machine machine) {
-        this.machine = machine;
-    }
+public abstract class Parser {
 
     /**
-     * Parse input bytes
+     * Override that method to parse received data
      * @param bytes - Bytes to parse
+     * @throws Exception
      */
-    public void parse(byte[] bytes) {
-
-        Rule rule = ((Rule) getMachine().getRule());
-        Node root = rule.getRoot();
-
-
-    }
+    public abstract void parse(byte[] bytes) throws Exception;
 
     /**
-     * Get parser's machine instance
-     * @return - Reference to machine
+     * Parse current node and store in it
+     * @param buffer - Buffer with received bytes
+     * @param node - Node
+     * @throws Exception
      */
-    public Machine getMachine() {
-        return machine;
-    }
+    public synchronized void parse(ByteBuffer buffer, Node node) throws Exception {
 
-    private Machine machine;
+        if (node.getChildren().size() > 0) {
+            for (Node child : node.getChildren()) {
+                parse(buffer, child);
+            }
+        } else {
+
+            byte[] bytes = new byte[node.getLength()];
+
+            buffer.get(bytes);
+
+        }
+    }
 }

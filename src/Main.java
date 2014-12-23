@@ -15,7 +15,7 @@ public class Main {
 
         // Sleep a bit
         try {
-            Thread.sleep(250);
+            Thread.sleep(100);
         } catch (InterruptedException ignored) {
         }
 
@@ -24,7 +24,7 @@ public class Main {
             new Thread(machine.getReceiver()).start();
         }
 
-        // Wait for emulator (it will provide infinity loop)
+        // Wait for emulator
         fake.getEmulator().await();
     }
 }

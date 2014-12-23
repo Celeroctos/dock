@@ -5,6 +5,8 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.security.SecureRandom;
 import java.util.Arrays;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 public class FakeFactory {
 
@@ -36,8 +38,15 @@ public class FakeFactory {
 
 		final Node root = ((Rule) machine.getRule()).getRoot();
 
-		final int[] formats = new int[] {
-			10, 11, 12, 20, 21, 22
+		final Map<Integer, String> formatMap = new LinkedHashMap<Integer, String>() {
+			{
+				put(10, "order-information");
+				put(11, "order-information-ok");
+				put(12, "order-information-ng");
+				put(20, "measurement-data");
+				put(21, "measurement-data-ok");
+				put(22, "measurement-data-ng");
+			}
 		};
 
 		Generator generator = new Generator() {
@@ -48,18 +57,7 @@ public class FakeFactory {
 					= new ByteArrayOutputStream();
 
 				Node outline = root.get("outline");
-				Node format = null;
-
-				for (Node node : root.getChildren()) {
-					if (node.has("format-id") && node.get("format-id").getFixed() == f) {
-						format = node;
-						break;
-					}
-				}
-
-				if (format == null) {
-					throw new Exception("Unable to generate fake data, can't find node for format \"" + f + "\"");
-				}
+				Node format = root.get(formatMap.get(f));
 
 				write(stream, outline.get("length"), Integer.toString(format.getLength()));
 				write(stream, outline.get("format"), Integer.toString(f));
@@ -73,7 +71,8 @@ public class FakeFactory {
 
 			@Override
 			public void generate() throws Exception {
-				for (int format : formats) {
+
+				for (int format : formatMap.keySet()) {
 					generate(format);
 				}
 			}
@@ -113,7 +112,7 @@ public class FakeFactory {
 					socket = new ServerSocket(
 						receiveInfo.getPort()
 					);
-					for (int format : formats) {
+					for (int format : formatMap.keySet()) {
 						new Session(socket.accept(), format).run();
 					}
 				} catch (Exception e) {
@@ -236,7 +235,13 @@ public class FakeFactory {
 
 		if (value.length() < node.getLength()) {
 			if (node.getCast().toLowerCase().equals("string") || value.length() == 0) {
-				value = randomFake(node.getLength()).substring(value.length()).substring(0, node.getLength() - value.length() - 1) + value;
+				if ((node.getLength() % 2) != 0) {
+					value = randomFake(node.getLength())
+						.substring(value.length()) + value + "#";
+				} else {
+					value = randomFake(node.getLength())
+						.substring(value.length()) + value;
+				}
 			} else {
 				value = zeroFake(node.getLength()).substring(value.length()) + value;
 			}

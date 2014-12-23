@@ -169,8 +169,12 @@
           "length": 1,
           "cast": "int"
         }, {
-          "name": "patient-age",
+          "name": "patient-birthday",
           "length": 8,
+          "cast": "date"
+        }, {
+          "name": "patient-age",
+          "length": 3,
           "cast": "date"
         }, {
           "name": "order-request-person-name",

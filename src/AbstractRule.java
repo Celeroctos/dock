@@ -3,10 +3,9 @@ public abstract class AbstractRule {
 
     /**
      * Construct loader with your machine instance
-     * @param machine - Reference to machine
+     * @param folder - Path to folder with rules
      */
-    public AbstractRule(Machine machine, String folder) {
-        this.machine = machine;
+    public AbstractRule(String folder) {
         this.folder = folder;
     }
 
@@ -49,6 +48,13 @@ public abstract class AbstractRule {
      */
     public Machine getMachine() {
         return machine;
+    }
+
+    /**
+     * @param machine - Reference to machine
+     */
+    public void setMachine(Machine machine) {
+        this.machine = machine;
     }
 
     private Machine machine;

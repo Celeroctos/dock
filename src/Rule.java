@@ -10,8 +10,11 @@ import java.util.Vector;
 
 public class Rule extends AbstractRule {
 
-    public Rule(Machine machine) {
-        super(machine, "rule");
+    /**
+     * Default rule constructor
+     */
+    public Rule() {
+        super("rule");
     }
 
     /**

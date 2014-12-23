@@ -3,10 +3,16 @@ import java.net.Socket;
 public class Receiver implements Runnable {
 
     /**
-     * Construct receiver with machine
-     * @param machine - Machine instance
+     * @return - Machine instance
      */
-    public Receiver(Machine machine) {
+    public Machine getMachine() {
+        return machine;
+    }
+
+    /**
+     * @param machine - Reference to machine
+     */
+    public void setMachine(Machine machine) {
         this.machine = machine;
     }
 
@@ -43,13 +49,6 @@ public class Receiver implements Runnable {
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
-
-    /**
-     * @return - Machine instance
-     */
-    public Machine getMachine() {
-        return machine;
     }
 
     private Machine machine;
