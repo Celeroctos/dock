@@ -1,12 +1,16 @@
 import com.sun.org.apache.xerces.internal.impl.dv.util.HexBin;
 
 import java.io.*;
+import java.net.ServerSocket;
 import java.net.Socket;
 import java.security.SecureRandom;
 import java.util.Arrays;
 
 public class FakeFactory {
 
+	/**
+	 * Locked constructor
+	 */
 	private FakeFactory() {
 		/* Locked */
 	}
@@ -31,6 +35,10 @@ public class FakeFactory {
 		}
 
 		final Node root = ((Rule) machine.getRule()).getRoot();
+
+		final int[] formats = new int[] {
+			10, 11, 12, 20, 21, 22
+		};
 
 		Generator generator = new Generator() {
 
@@ -65,11 +73,6 @@ public class FakeFactory {
 
 			@Override
 			public void generate() throws Exception {
-
-				int[] formats = new int[] {
-					10, 11, 12, 20, 21, 22
-				};
-
 				for (int format : formats) {
 					generate(format);
 				}
@@ -83,39 +86,101 @@ public class FakeFactory {
 
 		Emulator emulator = new Emulator() {
 
-			@Override
-			public void run() {
-				try {
-					socket = new Socket(
-						receiveInfo.getHost(), receiveInfo.getPort()
-					);
-				} catch (IOException ignored) {
+			class Session implements Runnable {
+
+				public Session(Socket socket) {
+					this.socket = socket;
 				}
+
+				@Override
+				public void run() {
+					try {
+						OutputStream stream = socket.getOutputStream();
+						for (int format : formats) {
+							stream.write(read(machine, Integer.toString(format)));
+						}
+					} catch (Exception ignored) {
+					}
+				}
+
+				public Socket getSocket() {
+					return socket;
+				}
+
+				private Socket socket;
 			}
 
 			@Override
-			public void load() throws Exception {
-				
+			public void run() {
+
+				Socket client;
+
+				try {
+					socket = new ServerSocket(
+						receiveInfo.getPort()
+					);
+
+					while ((client = socket.accept()) != null) {
+						new Thread(new Session(client)).start();
+					}
+
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 			}
 
 			@Override
 			public void emulate() throws Exception {
-				thread = new Thread(this);
-				thread.start();
+				thread = new Thread(
+					this
+				);
+				thread.run();
 			}
 
 			@Override
 			public void interrupt() throws Exception {
-				if (thread != null && thread.isAlive() && !thread.isInterrupted()) {
-					thread.interrupt();
-				}
+				socket.close();
+				thread.interrupt();
 			}
 
-			Socket socket = null;
-			Thread thread = null;
+			private ServerSocket socket;
+			private Thread thread;
 		};
 
 		return new Fake(generator, emulator);
+	}
+
+	/**
+	 * Read fake data from file
+	 * @param machine - Machine instance
+	 * @param name - Fake data name
+	 * @throws Exception
+	 */
+	private byte[] read(Machine machine, String name) throws Exception {
+
+		File dir = new File("fake" + File.separator + machine.getName().toLowerCase());
+
+		if (!dir.exists()) {
+			throw new Exception("Can't load fake data file for \"" + machine.getName() + "\"");
+		}
+
+		File handle = new File(dir.getPath() + File.separator + name);
+
+		if (!handle.exists()) {
+			throw new Exception("Can't load fake data file for \"" + machine.getName() + "\"");
+		}
+
+		InputStream file = new FileInputStream(
+			handle
+		);
+
+		byte[] bytes = new byte[(int) handle.length()];
+
+		if (file.read(bytes) != bytes.length) {
+			throw new Exception("Can't load fake data file for \"" + machine.getName() + "\"");
+		}
+
+		return bytes;
 	}
 
 	/**
@@ -130,7 +195,7 @@ public class FakeFactory {
 		File dir = new File("fake" + File.separator + machine.getName().toLowerCase());
 
 		if (!dir.exists() && !dir.mkdirs()) {
-			throw new Exception("Can't create directories for fake data \"" + machine.getName() + "\"");
+			throw new Exception("Can't create directories for fake data for \"" + machine.getName() + "\"");
 		}
 
 		OutputStream file = new FileOutputStream(new File(
