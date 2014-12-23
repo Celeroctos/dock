@@ -3,8 +3,8 @@ public class Fake {
 
 	/**
 	 * Construct fake class with generator and emulator
-	 * @param generator
-	 * @param emulator
+	 * @param generator - Fake generator
+	 * @param emulator - Fake emulator
 	 */
 	public Fake(Generator generator, Emulator emulator) {
 		this.generator = generator;

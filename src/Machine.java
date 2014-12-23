@@ -6,7 +6,7 @@ public class Machine {
      * @param name - Machine's name
      */
     public Machine(String name) {
-        this(name, null, null);
+        this(name, null, null, null);
     }
 
     /**
@@ -15,7 +15,7 @@ public class Machine {
      * source, etc
      * @param name - Machine's name
      */
-    public Machine(String name, Receiver receiver, AbstractRule rule) {
+    public Machine(String name, Receiver receiver, AbstractRule rule, Parser parser) {
 
         this.name = name;
 
@@ -29,6 +29,12 @@ public class Machine {
             this.rule = new Rule(this);
         } else {
             this.rule = rule;
+        }
+
+        if (parser == null) {
+            this.parser = new Parser(this);
+        } else {
+            this.parser = parser;
         }
     }
 
@@ -53,7 +59,15 @@ public class Machine {
         return name;
     }
 
+    /**
+     * @return - Parser
+     */
+    public Parser getParser() {
+        return parser;
+    }
+
     private Receiver receiver;
     private AbstractRule rule;
     private String name;
+    Parser parser;
 }

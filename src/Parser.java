@@ -1,5 +1,5 @@
 
-public abstract class Parser {
+public class Parser {
 
     /**
      * Construct parser with your machine instance
@@ -9,7 +9,17 @@ public abstract class Parser {
         this.machine = machine;
     }
 
+    /**
+     * Parse input bytes
+     * @param bytes - Bytes to parse
+     */
+    public void parse(byte[] bytes) {
 
+        Rule rule = ((Rule) getMachine().getRule());
+        Node root = rule.getRoot();
+
+
+    }
 
     /**
      * Get parser's machine instance

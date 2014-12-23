@@ -105,6 +105,30 @@ public class Rule extends AbstractRule {
         }
     }
 
+    /**
+     * Calculate maximum package length
+     * @return - Maximum package length
+     */
+    public int getLength() {
+        return getLength(root);
+    }
+
+    /**
+     * Calculate maximum package length with node
+     * @param node - Node to calculate
+     * @return - Maximum length for current node
+     */
+    private int getLength(Node node) {
+
+        int length = node.getLength();
+
+        for (Node child : node.getChildren()) {
+            length += getLength(child);
+        }
+
+        return length;
+    }
+
     public static class SocketInfo {
 
         /**

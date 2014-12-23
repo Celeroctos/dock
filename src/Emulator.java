@@ -12,4 +12,10 @@ public interface Emulator extends Runnable {
 	 * @throws Exception
 	 */
 	public void interrupt() throws Exception;
+
+	/**
+	 * Override that method to await while emulator finish
+	 * @throws Exception
+	 */
+	public void await() throws Exception;
 }

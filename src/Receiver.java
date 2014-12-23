@@ -1,37 +1,56 @@
-import java.io.InputStream;
 import java.net.Socket;
-import java.nio.ByteBuffer;
 
-public class Receiver {
+public class Receiver implements Runnable {
 
+    /**
+     * Construct receiver with machine
+     * @param machine - Machine instance
+     */
     public Receiver(Machine machine) {
         this.machine = machine;
     }
 
-    public void connect(String host, int port) throws Exception {
-        socket = new Socket(host, port);
-    }
+    @Override
+    public void run() {
 
-    public ByteBuffer receive() throws Exception {
-        return null;
-    }
+        Rule rule = ((Rule) machine.getRule());
 
-    public InputStream getInputStream() throws Exception {
-        if (socket != null) {
-            return socket.getInputStream();
-        } else {
-            return null;
+        try {
+            // Open client socket and connect to machine
+            Socket socket = new Socket(
+				rule.getReceiveInfo().getHost(),
+				rule.getReceiveInfo().getPort()
+			);
+
+            // Allocate maximum allowed package
+            byte[] bytes = new byte[rule.getLength()];
+
+            // Receive package
+            int length = socket.getInputStream().read(bytes);
+
+            if (length < 0) {
+                return;
+            }
+
+            byte[] result = new byte[length];
+
+            // Copy received package to result package
+            System.arraycopy(bytes, 0, result, 0, length);
+
+            // Invoke parser to parse input result
+            machine.getParser().parse(result);
+
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
+    /**
+     * @return - Machine instance
+     */
     public Machine getMachine() {
         return machine;
     }
 
-    public Socket getSocket() {
-       return socket;
-    }
-
-    private Socket socket = null;
     private Machine machine;
 }

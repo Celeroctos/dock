@@ -88,42 +88,34 @@ public class FakeFactory {
 
 			class Session implements Runnable {
 
-				public Session(Socket socket) {
+				public Session(Socket socket, int format) {
 					this.socket = socket;
+					this.format = format;
 				}
 
 				@Override
 				public void run() {
 					try {
-						OutputStream stream = socket.getOutputStream();
-						for (int format : formats) {
-							stream.write(read(machine, Integer.toString(format)));
-						}
+						socket.getOutputStream().write(read(machine,
+							Integer.toString(format)
+						));
 					} catch (Exception ignored) {
 					}
 				}
 
-				public Socket getSocket() {
-					return socket;
-				}
-
 				private Socket socket;
+				private int format;
 			}
 
 			@Override
 			public void run() {
-
-				Socket client;
-
 				try {
 					socket = new ServerSocket(
 						receiveInfo.getPort()
 					);
-
-					while ((client = socket.accept()) != null) {
-						new Thread(new Session(client)).start();
+					for (int format : formats) {
+						new Session(socket.accept(), format).run();
 					}
-
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -134,13 +126,18 @@ public class FakeFactory {
 				thread = new Thread(
 					this
 				);
-				thread.run();
+				thread.start();
 			}
 
 			@Override
 			public void interrupt() throws Exception {
 				socket.close();
 				thread.interrupt();
+			}
+
+			@Override
+			public void await() throws Exception {
+				thread.join();
 			}
 
 			private ServerSocket socket;
