@@ -1,9 +1,7 @@
 import com.sun.org.apache.xerces.internal.impl.dv.util.HexBin;
 
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.OutputStream;
+import java.io.*;
+import java.net.Socket;
 import java.security.SecureRandom;
 import java.util.Arrays;
 
@@ -26,7 +24,7 @@ public class FakeFactory {
 	 * @return - Generator
 	 * @throws Exception
 	 */
-	public FakeGenerator createMek7222(final Machine machine) throws Exception {
+	public Fake createMek7222(final Machine machine) throws Exception {
 
 		if (!machine.getName().toUpperCase().equals("MEK7222")) {
 			throw new Exception("Illegal machine \"" + machine.getName() + "\"");
@@ -34,7 +32,7 @@ public class FakeFactory {
 
 		final Node root = ((Rule) machine.getRule()).getRoot();
 
-		return new FakeGenerator(machine) {
+		Generator generator = new Generator() {
 
 			public void generate(int f) throws Exception {
 
@@ -62,7 +60,7 @@ public class FakeFactory {
 					write(stream, node);
 				}
 
-				write(machine, stream, Integer.toString(f));
+				flush(machine, stream, Integer.toString(f));
 			}
 
 			@Override
@@ -77,6 +75,47 @@ public class FakeFactory {
 				}
 			}
 		};
+
+		Rule rule = ((Rule) machine.getRule());
+
+		final Rule.SocketInfo receiveInfo = rule.getReceiveInfo();
+		final Rule.SocketInfo sendInfo = rule.getSendInfo();
+
+		Emulator emulator = new Emulator() {
+
+			@Override
+			public void run() {
+				try {
+					socket = new Socket(
+						receiveInfo.getHost(), receiveInfo.getPort()
+					);
+				} catch (IOException ignored) {
+				}
+			}
+
+			@Override
+			public void load() throws Exception {
+				
+			}
+
+			@Override
+			public void emulate() throws Exception {
+				thread = new Thread(this);
+				thread.start();
+			}
+
+			@Override
+			public void interrupt() throws Exception {
+				if (thread != null && thread.isAlive() && !thread.isInterrupted()) {
+					thread.interrupt();
+				}
+			}
+
+			Socket socket = null;
+			Thread thread = null;
+		};
+
+		return new Fake(generator, emulator);
 	}
 
 	/**
@@ -86,7 +125,7 @@ public class FakeFactory {
 	 * @param name - Fake data name
 	 * @throws Exception
 	 */
-	private void write(Machine machine, ByteArrayOutputStream stream, String name) throws Exception {
+	private void flush(Machine machine, ByteArrayOutputStream stream, String name) throws Exception {
 
 		File dir = new File("fake" + File.separator + machine.getName().toLowerCase());
 

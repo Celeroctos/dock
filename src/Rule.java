@@ -8,7 +8,7 @@ import java.security.SecureRandom;
 import java.util.Collection;
 import java.util.Vector;
 
-public class Rule extends Loader {
+public class Rule extends AbstractRule {
 
     public Rule(Machine machine) {
         super(machine, "rule");
@@ -59,7 +59,7 @@ public class Rule extends Loader {
     public void build() throws Exception {
 
         JSONObject json = new JSONObject(
-            getMachine().getRule().getResult()
+            this.json
         );
 
         if (!json.has("name")) {
@@ -74,11 +74,19 @@ public class Rule extends Loader {
 
         JSONObject protocolNode = json.getJSONObject("protocol");
 
-        if (!protocolNode.has("name")) {
-            throw new Exception("Unable to find key \"name\" in \"protocol\" node");
+        if (!protocolNode.has("send") || !protocolNode.has("receive")) {
+            throw new Exception("Unable to find key \"send\" or \"receive\" in \"protocol\" node");
         }
 
-        protocol = protocolNode.getString("name");
+        receiveInfo = new SocketInfo(
+            protocolNode.getJSONObject("receive").getString("host"),
+            protocolNode.getJSONObject("receive").getInt("port")
+        );
+
+        sendInfo = new SocketInfo(
+            protocolNode.getJSONObject("send").getString("host"),
+            protocolNode.getJSONObject("send").getInt("port")
+        );
 
         if (!json.has("data")) {
             throw new Exception("Unable to find key \"data\" in \"root\" node");
@@ -87,7 +95,7 @@ public class Rule extends Loader {
         JSONArray data = json.getJSONArray("data");
 
         for (int i = 0; i < data.length(); i++) {
-            build(root, data.getJSONObject(i));
+            build(root, data.getJSONObject(i), true);
         }
 
         for (Reference reference : references) {
@@ -97,7 +105,54 @@ public class Rule extends Loader {
         }
     }
 
-    private boolean build(Node parent, JSONObject json) throws Exception {
+    public static class SocketInfo {
+
+        /**
+         * Construct socket with host and port
+         * @param host - Socket's host
+         * @param port - Socket's port
+         */
+        public SocketInfo(String host, int port) {
+            this.host = host;
+            this.port = port;
+        }
+
+        /**
+         * @return - Socket's host name
+         */
+        public String getHost() {
+            return host;
+        }
+
+        /**
+         * @return - Socket's connect port
+         */
+        public int getPort() {
+            return port;
+        }
+
+        private String host;
+        private int port;
+    }
+
+    /**
+     * @return - Receive socket's info
+     */
+    public SocketInfo getReceiveInfo() {
+        return receiveInfo;
+    }
+
+    /**
+     * @return - Send socket's info
+     */
+    public SocketInfo getSendInfo() {
+        return sendInfo;
+    }
+
+    private SocketInfo receiveInfo = null;
+    private SocketInfo sendInfo = null;
+
+    private boolean build(Node parent, JSONObject json, boolean strict) throws Exception {
 
         String name;
         String cast;
@@ -126,7 +181,7 @@ public class Rule extends Loader {
 
         if (json.has("length")) {
             length = json.getInt("length");
-        } else if (!json.has("data")) {
+        } else if (!json.has("data") && strict) {
             throw new Exception("Unable to find key \"length\" in \"" + name + "\" node ");
         }
 
@@ -151,7 +206,7 @@ public class Rule extends Loader {
         JSONArray data = json.getJSONArray("data");
 
         for (int i = 0; i < data.length(); i++) {
-            build(node, data.getJSONObject(i));
+            build(node, data.getJSONObject(i), strict);
         }
 
         return true;
@@ -205,26 +260,11 @@ public class Rule extends Loader {
         return HexBin.encode(seed);
     }
 
-    /**
-     * Override that method to return loaded result
-     * @return - Loaded result
-     * @throws Exception
-     */
-    @Override
-    public String getResult() throws Exception {
-        return json;
-    }
-
-    public String getProtocol() {
-        return protocol;
-    }
-
     public Node getRoot() {
         return root;
     }
 
     private String json;
-    private String protocol;
     private Node root;
 
     private Collection<Reference> references

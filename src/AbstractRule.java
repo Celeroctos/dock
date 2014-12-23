@@ -1,11 +1,11 @@
 
-public abstract class Loader implements HasProtocol {
+public abstract class AbstractRule {
 
     /**
      * Construct loader with your machine instance
      * @param machine - Reference to machine
      */
-    public Loader(Machine machine, String folder) {
+    public AbstractRule(Machine machine, String folder) {
         this.machine = machine;
         this.folder = folder;
     }
@@ -32,25 +32,6 @@ public abstract class Loader implements HasProtocol {
      * @throws Exception
      */
     public abstract void build() throws Exception;
-
-    /**
-     * Override that method to return loaded result
-     * @return - Loaded result
-     * @throws Exception
-     */
-    public abstract String getResult() throws Exception;
-
-    /**
-     * If your class implements some protocol features then implement
-     * that method to return protocol name and register your class
-     * in ProtocolCollection, for example receiver implements TCP/IP
-     * protocol data transfer
-     * @return - Name of your class's protocol, which it's implements
-     */
-    @Override
-    public String getProtocol() {
-        return "file";
-    }
 
     /**
      * Every loader have to load data from somewhere, so implement

@@ -2,15 +2,10 @@ import java.io.InputStream;
 import java.net.Socket;
 import java.nio.ByteBuffer;
 
-public class Receiver implements HasProtocol {
+public class Receiver {
 
     public Receiver(Machine machine) {
         this.machine = machine;
-    }
-
-    @Override
-    public String getProtocol() {
-        return "TCP/IP";
     }
 
     public void connect(String host, int port) throws Exception {

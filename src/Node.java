@@ -6,6 +6,15 @@ import java.util.regex.Pattern;
 
 public class Node implements Cloneable {
 
+    /**
+     * Construct node
+     * @param parent - Node's parent
+     * @param name - Name
+     * @param cast - Type to cast
+     * @param length - Node's length
+     * @param max - Max length
+     * @param fixed - Fixed value
+     */
     public Node(Node parent, String name, String cast, int length, int max, int fixed) {
         this.parent = parent;
         this.name = name;
@@ -15,10 +24,21 @@ public class Node implements Cloneable {
         this.fixed = fixed;
     }
 
+    /**
+     * Insert node in current with it's own name as key
+     * @param node - Node to insert
+     * @throws Exception
+     */
     public void add(Node node) throws Exception {
         add(node.getName(), node);
     }
 
+    /**
+     * Insert node in current with another name
+     * @param key - Node's key
+     * @param node - Node instance
+     * @throws Exception
+     */
     public void add(String key, Node node) throws Exception {
 
         assert key != null;
@@ -31,10 +51,21 @@ public class Node implements Cloneable {
         nodeMap.put(key, node);
     }
 
+    /**
+     * Check node's key for existence
+     * @param key - Key to check
+     * @return - True if exists
+     */
     public boolean has(String key) {
         return key != null && nodeMap.containsKey(key);
     }
 
+    /**
+     * Get node from current
+     * @param key - Node's key
+     * @return - Found node
+     * @throws Exception
+     */
     public Node get(String key) throws Exception {
 
         assert key != null;
@@ -46,7 +77,12 @@ public class Node implements Cloneable {
         return nodeMap.get(key);
     }
 
-    public void drop(String key) throws Exception {
+    /**
+     * Remove node from current
+     * @param key - Key to remove
+     * @throws Exception
+     */
+    public void remove(String key) throws Exception {
 
         assert key != null;
 
@@ -54,9 +90,14 @@ public class Node implements Cloneable {
             throw new Exception("Unresolved key (" + key + ")");
         }
 
-        nodeMap.remove(key);
+        nodeMap.remove(key).parent = null;
     }
 
+    /**
+     * Clone node with without parent
+     * @return - Cloned node with all children
+     * @throws CloneNotSupportedException
+     */
     @Override
     public Node clone() throws CloneNotSupportedException {
 
@@ -72,6 +113,12 @@ public class Node implements Cloneable {
         }
     }
 
+    /**
+     * Clone node and set it's new parent (won't be appended)
+     * @param parent - New node's parent
+     * @return - Cloned node
+     * @throws Exception
+     */
     public Node clone(Node parent) throws Exception {
 
         Node node = new Node(parent,
@@ -92,6 +139,15 @@ public class Node implements Cloneable {
         return node;
     }
 
+    /**
+     * Find node by specific path. You can simply set node's name
+     * to get it likes via <code>get<code/> method, but also you
+     * can go to backward nodes <code>..<code/> and get nodes by it's
+     * index via <code>.[0]</code> path
+     * @param path - Path to find
+     * @return - Founded node or it will raise an exception
+     * @throws Exception
+     */
     public Node find(String path) throws Exception {
 
         int index = path.indexOf('/');
@@ -142,6 +198,10 @@ public class Node implements Cloneable {
         return node.find(path.substring(index + 1));
     }
 
+    /**
+     * Find root node from current
+     * @return - Root node
+     */
     public Node root() {
 
         Node node = this;
@@ -153,26 +213,45 @@ public class Node implements Cloneable {
         return node;
     }
 
+    /**
+     * @return - Node's children
+     */
     public Collection<Node> getChildren() {
         return nodeMap.values();
     }
 
+    /**
+     * @return - Name
+     */
     public String getName() {
         return name;
     }
 
+    /**
+     * @return - Parent node or null
+     */
     public Node getParent() {
         return parent;
     }
 
+    /**
+     * @return - Type to cast node
+     */
     public String getCast() {
         return cast;
     }
 
+    /**
+     * @return - Max allowed node's children length
+     */
     public int getMax() {
         return max;
     }
 
+    /**
+     * @return - Current node's length or total children
+     * length, only if hasn't been set
+     */
     public int getLength() {
 
         int nodeLength = 0;
@@ -189,6 +268,9 @@ public class Node implements Cloneable {
         return length;
     }
 
+    /**
+     * @return - Default node value
+     */
     public int getFixed() {
         return fixed;
     }

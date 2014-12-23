@@ -15,7 +15,7 @@ public class Machine {
      * source, etc
      * @param name - Machine's name
      */
-    public Machine(String name, Receiver receiver, Loader rule) {
+    public Machine(String name, Receiver receiver, AbstractRule rule) {
 
         this.name = name;
 
@@ -42,7 +42,7 @@ public class Machine {
     /**
      * @return - Loader
      */
-    public Loader getRule() {
+    public AbstractRule getRule() {
         return rule;
     }
 
@@ -54,6 +54,6 @@ public class Machine {
     }
 
     private Receiver receiver;
-    private Loader rule;
+    private AbstractRule rule;
     private String name;
 }
