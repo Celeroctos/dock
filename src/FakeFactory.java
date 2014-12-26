@@ -256,7 +256,7 @@ public class FakeFactory {
 	 * @return - Generated data
 	 * @throws Exception
 	 */
-	private static String zeroFake(int length) throws Exception {
+	public static String zeroFake(int length) throws Exception {
 		byte[] bytes = new byte[length];
 		Arrays.fill(bytes, (byte) '0');
 		return new String(bytes);
@@ -268,7 +268,7 @@ public class FakeFactory {
 	 * @return - Generated data
 	 * @throws Exception
 	 */
-	private static String randomFake(int length) throws Exception {
+	public static String randomFake(int length) throws Exception {
 		SecureRandom secureRandom = new SecureRandom();
 		byte[] bytes = new byte[length / 2];
 		secureRandom.nextBytes(bytes);

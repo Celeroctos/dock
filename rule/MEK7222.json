@@ -11,6 +11,10 @@
       "port": 1100
     }
   },
+  "laboratory": {
+    "host": "127.0.0.1/laboratory",
+    "key": "994da4ff566152d49179"
+  },
   "data": [
     {
       "name": "outline",

@@ -132,53 +132,14 @@ public class Rule extends AbstractRule {
         return length;
     }
 
-    public static class SocketInfo {
-
-        /**
-         * Construct socket with host and port
-         * @param host - Socket's host
-         * @param port - Socket's port
-         */
-        public SocketInfo(String host, int port) {
-            this.host = host;
-            this.port = port;
-        }
-
-        /**
-         * @return - Socket's host name
-         */
-        public String getHost() {
-            return host;
-        }
-
-        /**
-         * @return - Socket's connect port
-         */
-        public int getPort() {
-            return port;
-        }
-
-        private String host;
-        private int port;
-    }
-
     /**
-     * @return - Receive socket's info
+     * Build tree for current json object
+     * @param parent - Parent node
+     * @param json - Json object with children
+     * @param strict - Is use strict mode
+     * @return - True if everything ok
+     * @throws Exception
      */
-    public SocketInfo getReceiveInfo() {
-        return receiveInfo;
-    }
-
-    /**
-     * @return - Send socket's info
-     */
-    public SocketInfo getSendInfo() {
-        return sendInfo;
-    }
-
-    private SocketInfo receiveInfo = null;
-    private SocketInfo sendInfo = null;
-
     private boolean build(Node parent, JSONObject json, boolean strict) throws Exception {
 
         String name;
@@ -197,7 +158,7 @@ public class Rule extends AbstractRule {
         if (json.has("name")) {
             name = json.getString("name");
         } else {
-            name = generateName();
+            name = FakeFactory.randomFake(10);
         }
 
         if (json.has("cast")) {
@@ -269,30 +230,7 @@ public class Rule extends AbstractRule {
         private String name;
     }
 
-    private static String generateName() throws Exception {
-
-        // Initialize secure random with default PRGN
-        SecureRandom secureRandom = new SecureRandom();
-
-        // Create 20 bytes block
-        byte[] bytes = new byte[10];
-
-        // Engine this bytes
-        secureRandom.nextBytes(bytes);
-
-        // Generate seed
-        byte[] seed = secureRandom.generateSeed(10);
-
-        // Encode and return as string
-        return HexBin.encode(seed);
-    }
-
-    public Node getRoot() {
-        return root;
-    }
-
     private String json;
-    private Node root;
 
     private Collection<Reference> references
         = new Vector<Reference>();

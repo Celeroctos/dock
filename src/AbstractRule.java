@@ -32,6 +32,50 @@ public abstract class AbstractRule {
      */
     public abstract void build() throws Exception;
 
+    public static class SocketInfo {
+
+        /**
+         * Construct socket with host and port
+         * @param host - Socket's host
+         * @param port - Socket's port
+         */
+        public SocketInfo(String host, int port) {
+            this.host = host;
+            this.port = port;
+        }
+
+        /**
+         * @return - Socket's host name
+         */
+        public String getHost() {
+            return host;
+        }
+
+        /**
+         * @return - Socket's connect port
+         */
+        public int getPort() {
+            return port;
+        }
+
+        private String host;
+        private int port;
+    }
+
+    /**
+     * @return - Receive socket's info
+     */
+    public SocketInfo getReceiveInfo() {
+        return receiveInfo;
+    }
+
+    /**
+     * @return - Send socket's info
+     */
+    public SocketInfo getSendInfo() {
+        return sendInfo;
+    }
+
     /**
      * Every loader have to load data from somewhere, so implement
      * that method to show from which relative path loader have
@@ -43,6 +87,13 @@ public abstract class AbstractRule {
     }
 
     /**
+     * @param machine - Reference to machine
+     */
+    public void setMachine(Machine machine) {
+        this.machine = machine;
+    }
+
+    /**
      * Get loader's machine instance
      * @return - Machine's instance
      */
@@ -51,11 +102,16 @@ public abstract class AbstractRule {
     }
 
     /**
-     * @param machine - Reference to machine
+     * Get rule's root node
+     * @return - Root node
      */
-    public void setMachine(Machine machine) {
-        this.machine = machine;
+    public Node getRoot() {
+        return root;
     }
+
+    protected Node root = null;
+    protected SocketInfo receiveInfo = null;
+    protected SocketInfo sendInfo = null;
 
     private Machine machine;
     private String folder;

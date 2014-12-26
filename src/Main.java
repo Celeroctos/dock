@@ -26,5 +26,9 @@ public class Main {
 
         // Wait for emulator
         fake.getEmulator().await();
+
+        Laboratory laboratory = new Laboratory(machine);
+
+
     }
 }
