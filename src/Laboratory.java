@@ -1,5 +1,5 @@
 
-public class Laboratory {
+public abstract class Laboratory implements Runnable {
 
 	/**
 	 * Construct laboratory with your machine
@@ -9,9 +9,29 @@ public class Laboratory {
 		this.machine = machine;
 	}
 
-	public void send() {
-
+	/**
+	 * When an object implementing interface <code>Runnable</code> is used to create a thread, starting the thread
+	 * causes the object's <code>run</code> method to be called in that separately executing thread.
+	 * <p/>
+	 * The general contract of the method <code>run</code> is that it may take any action whatsoever.
+	 * @see Thread#run()
+	 */
+	@Override
+	public void run() {
+		try {
+			synchronized (getMachine()) {
+				send();
+			}
+		} catch (Exception ignored) {
+			/* TODO : "Add laboratory stack to send stuff later" */
+		}
 	}
+
+	/**
+	 * Override that method to send all received information
+	 * from machine to LIS (laboratory module)
+	 */
+	public abstract void send() throws Exception;
 
 	/**
 	 * @return - Reference to laboratory's machine
@@ -20,5 +40,13 @@ public class Laboratory {
 		return machine;
 	}
 
+	/**
+	 * @return - Root node
+	 */
+	public Node getRoot() {
+		return root;
+	}
+
 	private Machine machine;
+	protected Node root;
 }

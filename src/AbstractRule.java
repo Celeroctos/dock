@@ -5,7 +5,8 @@ public abstract class AbstractRule {
      * Construct loader with your machine instance
      * @param folder - Path to folder with rules
      */
-    public AbstractRule(String folder) {
+    public AbstractRule(Machine machine, String folder) {
+        this.machine = machine;
         this.folder = folder;
     }
 
@@ -87,13 +88,6 @@ public abstract class AbstractRule {
     }
 
     /**
-     * @param machine - Reference to machine
-     */
-    public void setMachine(Machine machine) {
-        this.machine = machine;
-    }
-
-    /**
      * Get loader's machine instance
      * @return - Machine's instance
      */
@@ -109,9 +103,27 @@ public abstract class AbstractRule {
         return root;
     }
 
+    /**
+     * Get laboratory API key
+     * @return - API key
+     */
+    public String getKey() {
+        return key;
+    }
+
+    /**
+     * Get laboratory host
+     * @return - Laboratory host
+     */
+    public String getHost() {
+        return host;
+    }
+
     protected Node root = null;
     protected SocketInfo receiveInfo = null;
     protected SocketInfo sendInfo = null;
+    protected String key = null;
+    protected String host = null;
 
     private Machine machine;
     private String folder;

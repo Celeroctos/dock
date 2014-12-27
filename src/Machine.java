@@ -1,39 +1,47 @@
 
-public class Machine {
+public abstract class Machine {
 
     /**
-     * Construct machine with name and parser
+     * Construct machine with name and parser, don't send
+     * machine's name from adapter to super class
      * @param name - Machine's name
      */
-    public Machine(String name) {
-        this(name, null, null, null);
-    }
-
-    /**
-     * Construct machine instance with it's name, it can be used later,
-     * for example, to load config files or receive data from specific
-     * source, etc
-     * @param name - Machine's name
-     */
-    public Machine(String name, Receiver receiver, AbstractRule rule, Parser parser) {
-
+    protected Machine(String name) {
         this.name = name;
-        this.parser = parser;
-
-        if (receiver == null) {
-            this.receiver = new Receiver();
-        } else {
-            this.receiver = receiver;
-        }
-        this.receiver.setMachine(this);
-
-        if (rule == null) {
-            this.rule = new Rule();
-        } else {
-            this.rule = rule;
-        }
-        this.rule.setMachine(this);
+        this.laboratory = createLaboratory();
+        this.parser = createParser();
+        this.receiver = createReceiver();
+        this.rule = createRule();
     }
+
+    /**
+     * Override that method to create parser for your machine's
+     * data (it have to implement rule data parse)
+     * @return - Parser's instance
+     */
+    public abstract Parser createParser();
+
+    /**
+     * Override that method to create your own rule for
+     * current machine
+     * @return - Rule's instance
+     */
+    public abstract AbstractRule createRule();
+
+    /**
+     * Override that method to create machine's laboratory instance,
+     * it will create new laboratory to send received and parsed data
+     * from machine to LIS
+     * @return - Laboratory instance
+     */
+    public abstract Laboratory createLaboratory();
+
+    /**
+     * Override that method to create machine's receiver, which will receive
+     * data from DMS-PC
+     * @return - Receiver's instance
+     */
+    public abstract Receiver createReceiver();
 
     /**
      * @return - Receiver
@@ -43,24 +51,10 @@ public class Machine {
     }
 
     /**
-     * @param receiver - Receiver
-     */
-    public void setReceiver(Receiver receiver) {
-        this.receiver = receiver;
-    }
-
-    /**
      * @return - Loader
      */
     public AbstractRule getRule() {
         return rule;
-    }
-
-    /**
-     * @param rule - Rule
-     */
-    public void setRule(AbstractRule rule) {
-        this.rule = rule;
     }
 
     /**
@@ -78,14 +72,15 @@ public class Machine {
     }
 
     /**
-     * @param parser - Parser
+     * @return - Laboratory
      */
-    public void setParser(Parser parser) {
-        this.parser = parser;
+    public Laboratory getLaboratory() {
+        return laboratory;
     }
 
     private Receiver receiver;
     private AbstractRule rule;
     private String name;
     private Parser parser;
+    private Laboratory laboratory;
 }

@@ -1,74 +1,58 @@
-import java.nio.ByteBuffer;
-import java.util.LinkedHashMap;
-import java.util.Map;
+import java.util.HashMap;
 
-public class MachineFactory {
+public class MachineFactory implements Factorisable<Machine> {
 
-    private MachineFactory() {
-        /* Locked */
-    }
+	/**
+	 * @return - Machine factory instance
+	 */
+	public static MachineFactory getFactory() {
+		return factory;
+	}
 
-    /**
-     * Get singleton factory instance
-     * @return - Factory instance
-     */
-    public static MachineFactory getFactory() {
-        return factory;
-    }
+	/**
+	 * Can't construct machine factory
+	 */
+	private MachineFactory() {
+		super();
+	}
 
-    /**
-     * Build machine for MEK7222
-     * @return - Machine's instance
-     * @throws Exception
-     */
-    public Machine createMek7222() throws Exception {
+	/**
+	 * Construct new machine instance by it's name
+	 * @param name - Machine's name
+	 * @return - Machine's instance
+	 */
+	public Machine create(String name) throws Exception {
 
-        final Machine machine = new Machine("MEK7222");
+		// Try to load class with machine
+		Class.forName(name);
 
-        final Map<Integer, String> formatMap = new LinkedHashMap<Integer, String>() {
-            {
-                put(10, "order-information");
-                put(11, "order-information-ok");
-                put(12, "order-information-ng");
-                put(20, "measurement-data");
-                put(21, "measurement-data-ok");
-                put(22, "measurement-data-ng");
-            }
-        };
+		// Find key with machine and construct it's instance
+		if (map.containsKey(name)) {
+			try {
+				return map.get(name).getConstructor(name.getClass()).newInstance(name);
+			} catch (InstantiationException e) {
+				throw ((Exception) e.getCause());
+			}
+		}
 
-        machine.setParser(new Parser() {
-            @Override
-            public void parse(byte[] bytes) throws Exception {
+		// Will never happen (i hope)
+		return null;
+	}
 
-                Rule rule = ((Rule) machine.getRule());
-                Node root = rule.getRoot();
+	/**
+	 * Register new machine in factory
+	 * @param name - Machine's name
+	 * @param machine - Machine's class
+	 */
+	public void register(String name, Class<? extends Machine> machine) {
+		if (!map.containsKey(name)) {
+			map.put(name, machine);
+		}
+	}
 
-                ByteBuffer buffer = ByteBuffer.wrap(bytes);
+	private HashMap<String, Class<? extends Machine>> map
+		= new HashMap<String, Class<? extends Machine>>();
 
-                byte[] lengthBuffer = new byte[
-                        root.find("outline/length").getLength()
-                    ];
-
-                byte[] formatBuffer = new byte[
-                        root.find("outline/format").getLength()
-                    ];
-
-                buffer.get(lengthBuffer);
-                buffer.get(formatBuffer);
-
-                int length = Integer.parseInt(new String(lengthBuffer));
-                int format = Integer.parseInt(new String(formatBuffer));
-
-                root.get(formatMap.get(format)).read(buffer);
-            }
-        });
-
-        machine.getRule().load();
-        machine.getRule().build();
-
-        return machine;
-    }
-
-    private static MachineFactory factory
-            = new MachineFactory();
+	private static MachineFactory factory
+		= new MachineFactory();
 }

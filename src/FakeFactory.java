@@ -36,7 +36,7 @@ public class FakeFactory {
 			throw new Exception("Illegal machine \"" + machine.getName() + "\"");
 		}
 
-		final Node root = ((Rule) machine.getRule()).getRoot();
+		final Node root = machine.getRule().getRoot();
 
 		final Map<Integer, String> formatMap = new LinkedHashMap<Integer, String>() {
 			{

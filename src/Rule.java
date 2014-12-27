@@ -1,10 +1,8 @@
-import com.sun.org.apache.xerces.internal.impl.dv.util.HexBin;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.security.SecureRandom;
 import java.util.Collection;
 import java.util.Vector;
 
@@ -13,8 +11,8 @@ public class Rule extends AbstractRule {
     /**
      * Default rule constructor
      */
-    public Rule() {
-        super("rule");
+    public Rule(Machine machine) {
+        super(machine, "rule");
     }
 
     /**
@@ -105,6 +103,16 @@ public class Rule extends AbstractRule {
             reference.getParent().add(
                 root.get(reference.getName())
             );
+        }
+
+        if (json.has("laboratory")) {
+            JSONObject laboratory = json.getJSONObject("laboratory");
+            if (laboratory.has("host")) {
+                host = laboratory.getString("host");
+            }
+            if (laboratory.has("key")) {
+                key = laboratory.getString("key");
+            }
         }
     }
 

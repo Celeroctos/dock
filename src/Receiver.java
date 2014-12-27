@@ -3,18 +3,20 @@ import java.net.Socket;
 public class Receiver implements Runnable {
 
     /**
+     * Construct receiver with machine
+     * @param machine - Machine
+     */
+    public Receiver(Machine machine) {
+        this.machine = machine;
+    }
+
+    /**
      * @return - Machine instance
      */
     public Machine getMachine() {
         return machine;
     }
 
-    /**
-     * @param machine - Reference to machine
-     */
-    public void setMachine(Machine machine) {
-        this.machine = machine;
-    }
 
     @Override
     public void run() {

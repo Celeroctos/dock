@@ -130,7 +130,9 @@ public class Node implements Cloneable {
             getFixed()
         );
 
-        for (Node n : node.nodeMap.values()) {
+        node.setValue(getValue());
+
+        for (Node n : nodeMap.values()) {
             try {
                 node.add(n.getName(), n.clone(node));
             } catch (Exception ignored) {
