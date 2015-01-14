@@ -1,5 +1,9 @@
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import java.nio.ByteBuffer;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.regex.Matcher;
@@ -280,6 +284,29 @@ public class Node implements Cloneable {
     }
 
     /**
+     * Convert node to json
+     * @return - Json node
+     */
+    public JSONObject toJson() {
+
+        return new JSONObject(new HashMap<String, Object>() {{
+
+            put("fixed", fixed);
+            put("value", value);
+            put("name", name);
+            put("cast", cast);
+
+            JSONArray array = new JSONArray();
+
+            for (Node node : nodeMap.values()) {
+                array.put(node.toJson());
+            }
+
+            put("children", array);
+        }});
+    }
+
+    /**
      * @return - Default node value
      */
     public int getFixed() {
@@ -301,7 +328,7 @@ public class Node implements Cloneable {
     }
 
     private Map<String, Node> nodeMap
-            = new LinkedHashMap<String, Node>();
+        = new LinkedHashMap<String, Node>();
 
     private Node parent;
     private String value;

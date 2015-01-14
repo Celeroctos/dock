@@ -12,7 +12,7 @@
     }
   },
   "laboratory": {
-    "host": "127.0.0.1/laboratory",
+    "host": "http://localhost/moniiag/laboratory/api",
     "key": "994da4ff566152d49179"
   },
   "data": [

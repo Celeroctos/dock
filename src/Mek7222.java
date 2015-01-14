@@ -6,7 +6,7 @@ public class Mek7222 extends Machine {
 
 	static {
 		MachineFactory.getFactory().register(
-			"Mek7222", Mek7222.class
+			Mek7222.class
 		);
 	}
 
@@ -24,16 +24,14 @@ public class Mek7222 extends Machine {
 	@Override
 	public Parser createParser() {
 
-		final Map<Integer, String> formatMap = new LinkedHashMap<Integer, String>() {
-			{
-				put(10, "order-information");
-				put(11, "order-information-ok");
-				put(12, "order-information-ng");
-				put(20, "measurement-data");
-				put(21, "measurement-data-ok");
-				put(22, "measurement-data-ng");
-			}
-		};
+		final Map<Integer, String> formatMap = new LinkedHashMap<Integer, String>() {{
+			put(10, "order-information");
+			put(11, "order-information-ok");
+			put(12, "order-information-ng");
+			put(20, "measurement-data");
+			put(21, "measurement-data-ok");
+			put(22, "measurement-data-ng");
+		}};
 
 		return new Parser() {
 			@Override
@@ -80,20 +78,31 @@ public class Mek7222 extends Machine {
 	 */
 	@Override
 	public Laboratory createLaboratory() {
+
 		return new Laboratory(this) {
+
 			@Override
 			public void send() throws Exception {
 
-				this.root = getMachine().getRule().getRoot().clone();
-
-				System.out.println(
-					getMachine().getRule().getHost() + "?key=" + getMachine().getRule().getKey()
-				);
+				root = getMachine().getRule().getRoot().clone();
 
 				System.out.println(
 					getRoot().find("outline/format").getValue() + " -> " +
 					getRoot().find("outline/length").getValue()
 				);
+
+				System.out.println(getMachine().getRule().getRoot().toJson().toString());
+				System.out.println();
+
+				new Request(getMachine().getRule().getHost(), Request.Method.GET, new LinkedHashMap<String, Object>() {{
+					put("model", root.toJson().toString());
+					put("key", getMachine().getRule().getKey());
+				}}, new Request.Error() {
+					@Override
+					public void error(Exception exception) {
+						Repeater.getRepeater().push(getRequest(), exception);
+					}
+				});
 			}
 		};
 	}

@@ -35,18 +35,16 @@ public class MachineFactory implements Factorisable<Machine> {
 			}
 		}
 
-		// Will never happen (i hope)
-		return null;
+		throw new Exception("Can't resolve machine's name");
 	}
 
 	/**
 	 * Register new machine in factory
-	 * @param name - Machine's name
 	 * @param machine - Machine's class
 	 */
-	public void register(String name, Class<? extends Machine> machine) {
-		if (!map.containsKey(name)) {
-			map.put(name, machine);
+	public void register(Class<? extends Machine> machine) {
+		if (!map.containsKey(machine.getName())) {
+			map.put(machine.getName(), machine);
 		}
 	}
 
