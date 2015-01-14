@@ -86,13 +86,15 @@ public class Mek7222 extends Machine {
 
 				root = getMachine().getRule().getRoot().clone();
 
-				System.out.println(
-					getRoot().find("outline/format").getValue() + " -> " +
-					getRoot().find("outline/length").getValue()
-				);
+//				System.out.println(
+//					getRoot().find("outline/format").getValue() + " -> " +
+//					getRoot().find("outline/length").getValue()
+//				);
+//
+//				System.out.println(getMachine().getRule().getRoot().toJson().toString());
+//				System.out.println();
 
-				System.out.println(getMachine().getRule().getRoot().toJson().toString());
-				System.out.println();
+				Logger.getLogger().write(getMachine(), "Sending request to server");
 
 				new Request(getMachine().getRule().getHost(), Request.Method.GET, new LinkedHashMap<String, Object>() {{
 					put("model", root.toJson().toString());
@@ -100,6 +102,9 @@ public class Mek7222 extends Machine {
 				}}, new Request.Error() {
 					@Override
 					public void error(Exception exception) {
+						if (getRequest().getMachine() == null) {
+							getRequest().setMachine(getMachine());
+						}
 						Repeater.getRepeater().push(getRequest(), exception);
 					}
 				});

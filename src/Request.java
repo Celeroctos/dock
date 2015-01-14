@@ -42,14 +42,14 @@ public class Request {
     public abstract static class Ok extends Callback {
         @Override
         public void error(Exception exception) {
-            /* Ignore */
+            Logger.getLogger().write(getRequest().getMachine(), "Request has been send with errors");
         }
     }
 
     public abstract static class Error extends Callback {
         @Override
         public void ok(String response) {
-            /* Ignore */
+            Logger.getLogger().write(getRequest().getMachine(), "Request has been send successfully");
         }
     }
 
@@ -179,6 +179,22 @@ public class Request {
         return callback;
     }
 
+    /**
+     * @return - Request machine
+     */
+    public Machine getMachine() {
+        return machine;
+    }
+
+    /**
+     * Set request machine
+     * @param machine - Machine
+     */
+    public void setMachine(Machine machine) {
+        this.machine = machine;
+    }
+
+    private Machine machine = null;
     private String url;
     private Method method;
     private HashMap<String, Object> data;

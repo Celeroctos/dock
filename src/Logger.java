@@ -42,6 +42,7 @@ public class Logger {
             }
         } catch (Exception ignored) {
         }
+        flush();
         return this;
     }
 
@@ -86,6 +87,10 @@ public class Logger {
      */
     public synchronized void flush() {
         try {
+            File logHandle = new File(Config.LOG_FOLDER);
+            if (!logHandle.exists()) {
+                logHandle.mkdir();
+            }
             File handle = getFile();
             if (!handle.exists() && !handle.createNewFile()) {
                 throw new Exception("Unable to create log file");
@@ -124,11 +129,8 @@ public class Logger {
         ));
     }
 
-    private Calendar calendar
-        = Calendar.getInstance();
-
-    private Vector<String> vector
-        = new Vector<String>();
+    private Calendar calendar = Calendar.getInstance();
+    private Vector<String> vector = new Vector<String>();
 
     /**
      * Locked constructor

@@ -1,4 +1,7 @@
 import java.util.Stack;
+import java.util.concurrent.locks.Condition;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 public class Repeater extends Stack<Request> implements Runnable {
 
@@ -43,12 +46,9 @@ public class Repeater extends Stack<Request> implements Runnable {
             }
         }
         if (wasEmpty) {
-            try {
-                Thread.sleep(Config.REPEATER_DELAY);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            lock.notify();
+            lock.lock();
+            condition.signal();
+            lock.unlock();
         }
         return item;
     }
@@ -58,15 +58,25 @@ public class Repeater extends Stack<Request> implements Runnable {
      */
     @Override
     public void run() {
+        Logger.getLogger().write("Running repeater");
         while (true) {
+            lock.lock();
             try {
-                lock.wait();
+                Logger.getLogger().write("Waiting for requests ...");
+                while (size() == 0) {
+                    condition.await();
+                }
+                Logger.getLogger().write("Catch (" + size() + ") requests, working ...");
             } catch (InterruptedException ignored) {
                 break;
             }
+            lock.unlock();
             Stack<Request> stack;
             synchronized (this) {
-                stack = (Stack<Request>) this.clone();
+                stack = (Stack<Request>) clone();
+                if (!isEmpty()) {
+                    clear();
+                }
             }
             for (Request r : stack) {
                 try {
@@ -82,6 +92,12 @@ public class Repeater extends Stack<Request> implements Runnable {
                     } catch (Exception ignored) {
                     }
                 }
+            }
+            Logger.getLogger().write("Waiting for (" + Config.REPEATER_DELAY + ") to resent requests");
+            try {
+                Thread.sleep(Config.REPEATER_DELAY);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
             }
         }
     }
@@ -104,8 +120,25 @@ public class Repeater extends Stack<Request> implements Runnable {
         return thread;
     }
 
-    private Thread thread
-        = new Thread(this);
+    private Thread thread = new Thread(this);
 
-    private Object lock;
+    /**
+     * Get repeater's reentrant lock
+     * @return - Lock
+     */
+    public Lock getLock() {
+        return lock;
+    }
+
+    private Lock lock = new ReentrantLock();
+
+    /**
+     * Get condition variable for empty list
+     * @return - Condition variable
+     */
+    public Condition getCondition() {
+        return condition;
+    }
+
+    private Condition condition = lock.newCondition();
 }
