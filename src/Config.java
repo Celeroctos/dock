@@ -20,4 +20,9 @@ public class Config {
      * file
      */
     public static final int LOG_LIMIT = 100;
+
+    /**
+     * Use fake emulator to emulate requests with fake data
+     */
+    public static final boolean FAKE_EMULATOR = true;
 }

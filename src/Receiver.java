@@ -84,9 +84,14 @@ public class Receiver implements Runnable {
 				rule.getReceiveInfo().getPort()
 			);
 
+            int total = 0;
+
             while ((client = socket.accept()) != null) {
                 Logger.getLogger().write(getMachine(), "Accepted client (" + client.toString() + ")");
                 new Thread(new Session(client, rule)).start();
+                if (Config.FAKE_EMULATOR && ++total == 6) {
+                    break;
+                }
             }
 
         } catch (Exception e) {

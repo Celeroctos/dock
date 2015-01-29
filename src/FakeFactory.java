@@ -129,23 +129,18 @@ public class FakeFactory {
 
 			@Override
 			public void emulate() throws Exception {
-				thread = new Thread(
-					this
-				);
-				thread.start();
+				run();
 			}
 
 			@Override
 			public void interrupt() throws Exception {
-				thread.interrupt();
+				/* Ignore */
 			}
 
 			@Override
 			public void await() throws Exception {
-				thread.join();
+				/* Ignore */
 			}
-
-			private Thread thread;
 		};
 
 		return new Fake(generator, emulator);
