@@ -10,12 +10,9 @@ public class Main {
         machine.getRule().load();
         machine.getRule().build();
 
-        // Create fake instance for generator and emulator
-        Fake fake = FakeFactory.getFactory().createMek7222(machine);
-
-        // Generate, load and emulate fake data for MEK7222 machine
-        fake.getGenerator().generate();
-        fake.getEmulator().emulate();
+        // Run machine's receiver for current format and
+        // create new laboratory and run it
+        new Thread(machine.getReceiver()).start();
 
         // Sleep a bit
         try {
@@ -23,15 +20,12 @@ public class Main {
         } catch (InterruptedException ignored) {
         }
 
-        // Run receiver for every format
-        for (int i = 0; i < 6; i++) {
+        // Create fake instance for generator and emulator
+        Fake fake = FakeFactory.getFactory().createMek7222(machine);
 
-            // Run machine's receiver for current format
-            machine.getReceiver().run();
-
-            // Create new laboratory and run it
-            machine.createLaboratory().run();
-        }
+        // Generate, load and emulate fake data for MEK7222 machine
+        fake.getGenerator().generate();
+        fake.getEmulator().emulate();
 
         // Wait for emulator
         fake.getEmulator().await();

@@ -42,6 +42,7 @@ public class Logger {
             }
         } catch (Exception ignored) {
         }
+        System.out.print(vector.lastElement());
         flush();
         return this;
     }

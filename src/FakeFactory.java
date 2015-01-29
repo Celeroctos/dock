@@ -7,6 +7,7 @@ import java.security.SecureRandom;
 import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Vector;
 
 public class FakeFactory {
 
@@ -36,18 +37,16 @@ public class FakeFactory {
 			throw new Exception("Illegal machine \"" + machine.getName() + "\"");
 		}
 
-		final Node root = machine.getRule().getRoot();
+		final Map<Integer, String> formatMap = new LinkedHashMap<Integer, String>() {{
+			put(10, "order-information");
+			put(11, "order-information-ok");
+			put(12, "order-information-ng");
+			put(20, "measurement-data");
+			put(21, "measurement-data-ok");
+			put(22, "measurement-data-ng");
+		}};
 
-		final Map<Integer, String> formatMap = new LinkedHashMap<Integer, String>() {
-			{
-				put(10, "order-information");
-				put(11, "order-information-ok");
-				put(12, "order-information-ng");
-				put(20, "measurement-data");
-				put(21, "measurement-data-ok");
-				put(22, "measurement-data-ng");
-			}
-		};
+		final Node root = machine.getRule().getRoot();
 
 		Generator generator = new Generator() {
 
@@ -108,15 +107,23 @@ public class FakeFactory {
 
 			@Override
 			public void run() {
-				try {
-					socket = new ServerSocket(
-						receiveInfo.getPort()
-					);
-					for (int format : formatMap.keySet()) {
-						new Session(socket.accept(), format).run();
+				Vector<Thread> threads = new Vector<Thread>(formatMap.size());
+				for (int format : formatMap.keySet()) {
+					try {
+						Thread t = new Thread(new Session(
+							new Socket(
+								receiveInfo.getHost(),
+								receiveInfo.getPort()
+							), format
+						));
+						t.start();
+						threads.add(t);
+					} catch (Exception e) {
+						e.printStackTrace();
 					}
-				} catch (Exception e) {
-					e.printStackTrace();
+				}
+				for (Thread t : threads) {
+					t.run();
 				}
 			}
 
@@ -130,7 +137,6 @@ public class FakeFactory {
 
 			@Override
 			public void interrupt() throws Exception {
-				socket.close();
 				thread.interrupt();
 			}
 
@@ -139,7 +145,6 @@ public class FakeFactory {
 				thread.join();
 			}
 
-			private ServerSocket socket;
 			private Thread thread;
 		};
 
