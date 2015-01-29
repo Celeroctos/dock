@@ -114,8 +114,6 @@ public class Mek7222 extends Machine {
 					}}
 				);
 
-				System.out.println(json.toString());
-
 				if (json.has("status") && !json.getBoolean("status")) {
 					Logger.getLogger().write(getMachine(), "Error occurred while sending data to laboratory");
 				}

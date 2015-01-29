@@ -24,5 +24,5 @@ public class Config {
     /**
      * Use fake emulator to emulate requests with fake data
      */
-    public static final boolean FAKE_EMULATOR = true;
+    public static final boolean FAKE_EMULATOR = false;
 }
