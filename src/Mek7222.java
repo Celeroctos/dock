@@ -1,4 +1,7 @@
+import org.json.JSONObject;
+
 import java.nio.ByteBuffer;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -37,7 +40,7 @@ public class Mek7222 extends Machine {
 			@Override
 			public void parse(byte[] bytes) throws Exception {
 
-				Node root = Mek7222.this.getRule().getRoot();
+				Node root = getRule().getRoot();
 				ByteBuffer buffer = ByteBuffer.wrap(bytes);
 
 				byte[] lengthBuffer = new byte[
@@ -84,30 +87,38 @@ public class Mek7222 extends Machine {
 			@Override
 			public void send() throws Exception {
 
-				root = getMachine().getRule().getRoot().clone();
-
-//				System.out.println(
-//					getRoot().find("outline/format").getValue() + " -> " +
-//					getRoot().find("outline/length").getValue()
-//				);
-//
-//				System.out.println(getMachine().getRule().getRoot().toJson().toString());
-//				System.out.println();
-
+				// Write log
 				Logger.getLogger().write(getMachine(), "Sending request to server");
 
-				new Request(getMachine().getRule().getHost(), Request.Method.GET, new LinkedHashMap<String, Object>() {{
-					put("model", root.toJson().toString());
-					put("key", getMachine().getRule().getKey());
-				}}, new Request.Error() {
-					@Override
-					public void error(Exception exception) {
-						if (getRequest().getMachine() == null) {
-							getRequest().setMachine(getMachine());
-						}
-						Repeater.getRepeater().push(getRequest(), exception);
-					}
-				});
+				// Open connection with server
+				Connection connection = new Connection(
+					getMachine(), getMachine().getRule().getHost()
+				);
+
+				// Login with login and password from rule
+				connection.login(
+					getMachine().getRule().getLogin(),
+					getMachine().getRule().getPassword()
+				);
+
+				if (connection.getSession() == null) {
+					throw new Exception("Unable to connect to server API");
+				}
+
+				// Clone root node
+				root = getMachine().getRule().getRoot().clone();
+
+				JSONObject json = connection.make("laboratory/register",
+					new HashMap<String, Object>() {{
+						put("model", root.serialize());
+					}}
+				);
+
+				System.out.println(json.toString());
+
+				if (json.has("status") && !json.getBoolean("status")) {
+					Logger.getLogger().write(getMachine(), "Error occurred while sending data to laboratory");
+				}
 			}
 		};
 	}

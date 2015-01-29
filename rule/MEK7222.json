@@ -4,16 +4,17 @@
     "name": "TCP/IP",
     "send": {
       "host": "127.0.0.1",
-      "port": 1200
+      "port": 1100
     },
     "receive": {
       "host": "127.0.0.1",
-      "port": 1100
+      "port": 1200
     }
   },
   "laboratory": {
-    "host": "http://localhost/moniiag/laboratory/api",
-    "key": "994da4ff566152d49179"
+    "host": "http://localhost:81/moniiag/laboratory/api",
+    "login": "SYSTEM",
+    "password": "123456"
   },
   "data": [
     {

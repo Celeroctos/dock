@@ -4,7 +4,6 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.zip.GZIPInputStream;
 
@@ -42,14 +41,14 @@ public class Request {
     public abstract static class Ok extends Callback {
         @Override
         public void error(Exception exception) {
-            Logger.getLogger().write(getRequest().getMachine(), "Request has been send with errors");
+            Logger.getLogger().write(getRequest().getMachine(), "Request has been sent with errors");
         }
     }
 
     public abstract static class Error extends Callback {
         @Override
         public void ok(String response) {
-            Logger.getLogger().write(getRequest().getMachine(), "Request has been send successfully");
+            Logger.getLogger().write(getRequest().getMachine(), "Request has been sent successfully");
         }
     }
 
@@ -98,7 +97,7 @@ public class Request {
      * @param data - Data to send
      * @throws Exception
      */
-    public Request(String url, HashMap<String, Object> data) throws Exception {
+    public Request(String url, Map<String, Object> data) throws Exception {
         this(url, Method.POST, data, null);
     }
 
@@ -113,7 +112,7 @@ public class Request {
      *                 asynchronously
      * @throws Exception
      */
-    public Request(String url, Method method, HashMap<String, Object> data, Callback callback) throws Exception {
+    public Request(String url, Method method, Map<String, Object> data, Callback callback) throws Exception {
 
         if (callback != null) {
             callback.request = this;
@@ -168,7 +167,7 @@ public class Request {
     /**
      * @return - Request data
      */
-    public HashMap<String, Object> getData() {
+    public Map<String, Object> getData() {
         return data;
     }
 
@@ -197,10 +196,10 @@ public class Request {
     private Machine machine = null;
     private String url;
     private Method method;
-    private HashMap<String, Object> data;
+    private Map<String, Object> data;
     private Callback callback;
 
-    public static void sendGetAsync(final String url, final HashMap<String, Object> data, final Callback callback) throws Exception {
+    public static void sendGetAsync(final String url, final Map<String, Object> data, final Callback callback) throws Exception {
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -213,7 +212,7 @@ public class Request {
         }).start();
     }
 
-    public static void sendPostAsync(final String url, final HashMap<String, Object> data, final Callback callback) throws Exception {
+    public static void sendPostAsync(final String url, final Map<String, Object> data, final Callback callback) throws Exception {
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -226,7 +225,7 @@ public class Request {
         }).start();
     }
 
-    public static String sendGet(String url, HashMap<String, Object> data) throws Exception{
+    public static String sendGet(String url, Map<String, Object> data) throws Exception{
 
         int responseCode;
 
@@ -279,14 +278,14 @@ public class Request {
         return response.toString();
     }
 
-    public static String sendPost(String url, HashMap<String, Object> data) throws Exception {
+    public static String sendPost(String url, Map<String, Object> data) throws Exception {
 
         int responseCode;
         String urlParameters = "";
 
         // Build post url parameters
         for (Map.Entry<String, Object> i : data.entrySet()) {
-            urlParameters += i.getKey() + "=" + i.getValue().toString();
+            urlParameters += i.getKey() + "=" + i.getValue().toString() + "&";
         }
         if (data.size() > 0) {
             urlParameters = urlParameters.substring(0, urlParameters.length() - 1);
@@ -331,6 +330,31 @@ public class Request {
         bufferedReader.close();
 
         return response.toString();
+    }
+
+    /**
+     * Prepare url for request via GET method (it will put data parameters
+     * to url string)
+     * @param url - Url with path to controller's action
+     * @param data - Parameters to put into url
+     * @return - Url with parameters
+     */
+    public static String buildUrlForGet(String url, Map<String, Object> data) {
+
+        // Insert question after url
+        if (!url.endsWith("?")) {
+            url += "?";
+        }
+
+        // Build get url link
+        for (Map.Entry<String, Object> i : data.entrySet()) {
+            url += i.getKey() + "=" + i.getValue().toString() + "&";
+        }
+        if (data.size() > 0) {
+            url = url.substring(0, url.length() - 1);
+        }
+
+        return url;
     }
 
     private static final String USER_AGENT = "Mozilla/5.0 (Windows NT 6.1; WOW64; rv:25.0) Gecko/20100101 Firefox/25.0";

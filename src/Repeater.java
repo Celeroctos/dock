@@ -57,7 +57,7 @@ public class Repeater extends Stack<Request> implements Runnable {
      * Run thread
      */
     @Override
-    public void run() {
+    public final void run() {
         Logger.getLogger().write("Running repeater");
         while (true) {
             lock.lock();

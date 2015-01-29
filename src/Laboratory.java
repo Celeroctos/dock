@@ -22,8 +22,9 @@ public abstract class Laboratory implements Runnable {
 			synchronized (getMachine()) {
 				send();
 			}
-		} catch (Exception ignored) {
-			/* TODO : "Add laboratory stack to send stuff later" */
+		} catch (Exception e) {
+			e.printStackTrace();
+			Logger.getLogger().write(getMachine(), e.getMessage());
 		}
 	}
 

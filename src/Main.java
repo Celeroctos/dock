@@ -1,4 +1,3 @@
-import sun.awt.Mutex;
 
 public class Main {
 
@@ -26,15 +25,12 @@ public class Main {
 
         // Run receiver for every format
         for (int i = 0; i < 6; i++) {
-            new Runnable() {
-                @Override
-                public void run() {
-                    // Run machine's receiver for current format
-                    machine.getReceiver().run();
-                    // Create new laboratory and run it
-                    machine.createLaboratory().run();
-                }
-            }.run();
+
+            // Run machine's receiver for current format
+            machine.getReceiver().run();
+
+            // Create new laboratory and run it
+            machine.createLaboratory().run();
         }
 
         // Wait for emulator

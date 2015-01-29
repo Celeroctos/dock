@@ -46,18 +46,17 @@ public class Receiver implements Runnable {
             System.arraycopy(bytes, 0, result, 0, length);
 
             // Make backup of all received stuff
-            System.out.println(getMachine().getName());
             Backup.getBackup().write(getMachine(), result);
 
             // Invoke parser to parse input result
             try {
                 machine.getParser().parse(result);
             } catch (Exception ignored) {
-//                Backup.getBackup().write(getMachine(), result);
+                /* Backup.getBackup().write(getMachine(), result); */
             }
 
         } catch (Exception e) {
-            e.printStackTrace();
+            Logger.getLogger().write(getMachine(), e.getMessage());
         }
     }
 

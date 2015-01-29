@@ -110,8 +110,11 @@ public class Rule extends AbstractRule {
             if (laboratory.has("host")) {
                 host = laboratory.getString("host");
             }
-            if (laboratory.has("key")) {
-                key = laboratory.getString("key");
+            if (laboratory.has("login")) {
+                login = laboratory.getString("login");
+            }
+            if (laboratory.has("password")) {
+                password = laboratory.getString("password");
             }
         }
     }

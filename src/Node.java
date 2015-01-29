@@ -284,6 +284,14 @@ public class Node implements Cloneable {
     }
 
     /**
+     * Serialize node and all it's children
+     * @return - Serialized string to json
+     */
+    public String serialize() {
+        return toJson().toString();
+    }
+
+    /**
      * Convert node to json
      * @return - Json node
      */

@@ -1,6 +1,36 @@
 
 public abstract class AbstractRule {
 
+    public static class SocketInfo {
+
+        /**
+         * Construct socket with host and port
+         * @param host - Socket's host
+         * @param port - Socket's port
+         */
+        public SocketInfo(String host, int port) {
+            this.host = host;
+            this.port = port;
+        }
+
+        /**
+         * @return - Socket's host name
+         */
+        public String getHost() {
+            return host;
+        }
+
+        /**
+         * @return - Socket's connect port
+         */
+        public int getPort() {
+            return port;
+        }
+
+        private String host;
+        private int port;
+    }
+
     /**
      * Construct loader with your machine instance
      * @param folder - Path to folder with rules
@@ -32,36 +62,6 @@ public abstract class AbstractRule {
      * @throws Exception
      */
     public abstract void build() throws Exception;
-
-    public static class SocketInfo {
-
-        /**
-         * Construct socket with host and port
-         * @param host - Socket's host
-         * @param port - Socket's port
-         */
-        public SocketInfo(String host, int port) {
-            this.host = host;
-            this.port = port;
-        }
-
-        /**
-         * @return - Socket's host name
-         */
-        public String getHost() {
-            return host;
-        }
-
-        /**
-         * @return - Socket's connect port
-         */
-        public int getPort() {
-            return port;
-        }
-
-        private String host;
-        private int port;
-    }
 
     /**
      * @return - Receive socket's info
@@ -104,14 +104,6 @@ public abstract class AbstractRule {
     }
 
     /**
-     * Get laboratory API key
-     * @return - API key
-     */
-    public String getKey() {
-        return key;
-    }
-
-    /**
      * Get laboratory host
      * @return - Laboratory host
      */
@@ -119,12 +111,28 @@ public abstract class AbstractRule {
         return host;
     }
 
+    /**
+     * Get user's login from rule
+     * @return - User's login
+     */
+    public String getLogin() {
+        return login;
+    }
+
+    /**
+     * Get user's password from rule
+     * @return - User's password
+     */
+    public String getPassword() {
+        return password;
+    }
+
     protected Node root = null;
     protected SocketInfo receiveInfo = null;
     protected SocketInfo sendInfo = null;
-    protected String key = null;
     protected String host = null;
-
+    protected String login = null;
+    protected String password = null;
     private Machine machine;
     private String folder;
 }
