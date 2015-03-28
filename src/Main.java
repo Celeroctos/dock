@@ -6,9 +6,13 @@ public class Main {
         // Create machine instance for MEK7222
         final Machine machine = MachineFactory.getFactory().create("Mek7222");
 
+		Logger.getLogger().write(machine, "Loading and building rules for machine");
+
         // Load rules and build machine tree
         machine.getRule().load();
         machine.getRule().build();
+
+		Logger.getLogger().write(machine, "Starting thread for machine");
 
         // Run machine's receiver for current format and
         // create new laboratory and run it
@@ -41,5 +45,7 @@ public class Main {
             // Start thread synchronously
             thread.run();
         }
+
+		Logger.getLogger().write(machine, "Terminating application");
     }
 }

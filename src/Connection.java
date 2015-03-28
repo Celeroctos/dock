@@ -56,6 +56,7 @@ public class Connection {
 			host = host + "/";
 		}
 
+		this.machine = machine;
 		this.host = host;
 		this.password = password;
 		this.login = login;

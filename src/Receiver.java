@@ -86,13 +86,20 @@ public class Receiver implements Runnable {
 
             int total = 0;
 
+			Logger.getLogger().write(machine, "Waiting for incoming connection, port (" + rule.getReceiveInfo().getPort() + ")");
+
             while ((client = socket.accept()) != null) {
+
                 Logger.getLogger().write(getMachine(), "Accepted client (" + client.toString() + ")");
+
                 new Thread(new Session(client, rule)).start();
+
                 if (Config.FAKE_EMULATOR && ++total == 6) {
                     break;
                 }
             }
+
+			Logger.getLogger().write(machine, "Closing server socket");
 
         } catch (Exception e) {
             Logger.getLogger().write(getMachine(), e.getMessage());

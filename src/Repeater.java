@@ -27,7 +27,7 @@ public class Repeater extends Stack<Request> implements Runnable {
 
     /**
      * Pushes an item onto the top of this stack
-     * @param item - The item to be pushed onto this stack.
+     * @param item - The item to be pushed into this stack.
      * @param exception - Exception
      * @return - The <code>item</code> argument.
      * @see java.util.Vector#addElement
@@ -56,6 +56,7 @@ public class Repeater extends Stack<Request> implements Runnable {
     /**
      * Run thread
      */
+	@SuppressWarnings("unchecked")
     @Override
     public final void run() {
         Logger.getLogger().write("Running repeater");
