@@ -1,0 +1,440 @@
+ErrorCode	ErrorName
+1	Inconsistent software versions. Please contact service.
+83	Value above reference range
+84	Value below reference range
+85	Value is below the critical limit
+86	Value is above the critical limit
+89	Measured QC value above the control range
+90	Measured QC value below control range
+93	Value above the reportable range
+94	Value below the reportable range
+99	LIS/HIS: Low level protocol send failed
+100	LIS/HIS: Low level protocol receive failed
+101	LIS/HIS: Low level protocol unable to send because connection is busy
+102	LIS/HIS: Low level protocol receive failed because of timeout
+109	LIS/HIS: Low level protocol send failed, ACK or NAK not received
+115	LIS/HIS: Low level protocol ACK after ENQ not received
+117	LIS/HIS: Invalid connection configuration
+118	LIS/HIS: Connection manager could not open high level protocol
+128	LIS/HIS: Failed to open connection
+129	LIS/HIS: Failed to close connection
+131	LIS/HIS: Failed to send packet
+132	LIS/HIS: Failed to receive packet
+133	LIS/HIS: Connection lost
+134	LIS/HIS: Connection established
+135	LIS/HIS: High level protocol could not open connection
+141	LIS/HIS: Low level protocol configuration not correct
+142	LIS/HIS: Low level protocol failed to open connection
+143	LIS/HIS: Low level protocol failed to close connection
+165	LIS/HIS: High level protocol could not generate high level packet
+166	LIS/HIS: General communication error
+167	LIS/HIS: High level protocol received packet in wrong format
+200	User msg:
+201	Westgard Rule (1.2s) violation
+202	Westgard Rule (1.3s) violation
+203	Westgard Rule (2.2s) violation
+204	Westgard Rule (R.4s) violation
+205	Westgard Rule (4.1s) violation
+206	Westgard Rule (10.x) violation
+207	Calibration schedule reminder(s) present
+208	Quality control schedule reminder(s) present
+209	Replacement schedule reminder(s) present
+210	Calibration error(s) present
+211	Quality control error(s) present
+212	System message(s) present
+213	Automatic backup failed
+214	Automatic backup succeeded
+215	Automatic backup failed. Error code:
+216	Printer error
+217	Replacement:
+218	Inlet positioning error
+219	Conditioning error in El/Met electrode module
+232	Oxi Water Spectrum intensity unsatisfactory
+234	Oxi Sample Spectrum intensity too low
+235	Spectrometer EEPROM reading failed
+236	Spectrometer EEPROM writing failed
+237	Spectrometer voltage bias too high
+238	Spectrometer voltage bias too low
+245	Spectrometer temperature too high
+246	Spectrometer temperature too low
+247	Spectrometer A/D converter failed
+248	Spectrometer missing trigger
+249	Halogen Lamp voltage too high
+250	Halogen lamp voltage too low
+251	Halogen Lamp intensity too high
+252	Halogen Lamp intensity too low
+254	Photodiode current setting too high
+255	Photodiode current setting too low
+256	Neon Lamp voltage too high
+257	Neon Lamp voltage too low
+258	Neon Lamp intensity too low
+259	Temp. error: Oxi photodiode
+269	Hemolyzer phase regulation failed
+270	Temp. error: Hemolyzer
+290	Warning: SHb detected
+291	SHb too high
+292	Turbidity too high
+293	Warning: HbF detected and compensated for
+314	Oxi wavelength deviation high
+315	Neon number too high
+316	Neon number too low
+326	Empty Gas 1 cylinder
+327	Empty Gas 2 cylinder
+328	No leading air segment in inlet's liquid sensor within time frame
+329	QC expiration date exceeded
+331	No sample detected during sample aspiration
+332	pH/BG module not filled
+333	pH/BG module not filled
+339	Inlet Liquid Sensor empty too soon during solution pump calibration
+340	Inlet Liquid Sensor not empty within timeout during solution pump calibration
+342	Inlet Liquid Sensor empty too soon during pH/BG pump calibration
+343	Inlet Liquid Sensor not empty within timeout during pH/BG pump calibration
+345	Inlet Liquid Sensor empty too soon during El/Met pump calibration
+346	Inlet Liquid Sensor not empty within timeout during El/Met pump calibration
+354	Temp. error: Inlet preheater
+355	Temp. error: pH/BG module
+356	Temp. error: El/Met module
+357	Temp. error: Barometer
+365	Cleaning Solution missing - check level in bottle
+367	pH/BG not filled within time limit
+369	El/Met not filled within time limit
+374	Inhomogeneous sample at pH/BG module
+375	Calibration status out of limits
+376	Calibration Drift 1 out of range
+377	Calibration Drift 2 out of range
+378	Calibration sensitivity out of range
+379	Calibration unstable (response fault)
+386	Barometer out of range
+408	Zero current error
+443	Ca(7.4) not usable
+452	Interference during measurement
+467	Inhomogeneous sample at El/Met module
+468	Inhomogeneous sample at Future module
+474	No sample in El/Met upper liquid sensor within time limit
+475	No sample in OXI's liquid sensor within time limit
+476	Measurement unstable
+478	pCO2 drifting
+480	pO2 drifting
+481	No Rinse plug detected in Flush
+482	Rinse plug too large in Flush
+484	Today is last day in current statistical month - remember to print QC statistics
+487	A new statistical month has begun - remember to export WDC data
+493	Warning: Bilirubin detected and compensated for
+494	Bilirubin too high
+499	Sample too early in OXI's liquid sensor.
+500	Rinse detected by pH/BG module when not expected.
+501	Rinse not aspirated into the pH/BG module within time limit
+502	Air detected when filling the Inlet during PumpCal - retrying...
+503	Unable to fill Inlet with continuous rinse segment during Pump Calibration
+504	No sample in El/Met lower liquid sensor within time limit
+505	Future upper liquid sensor did not detect Cleaning Solution
+506	El/Met upper liquid sensor did not detect Cleaning Solution
+507	pH/BG upper liquid sensor did not detect Cleaning solution
+508	Rinse Error
+509	pH/BG upper liquid sensor did not receive Rinse from above
+510	El/Met upper liquid sensor did not receive Rinse from above
+512	Temperature error
+513	No gas
+514	Communication error
+516	Bottle empty or transport error
+521	Inhomogeneous sample
+522	Calibration error
+523	Calibration drift out of range
+524	Measuring error
+525	Conditioning error
+529	Inlet liquid sensor error
+531	pH/BG upper Liquid Sensor error
+532	El/Met lower Liquid Sensor error
+534	El/Met upper Liquid Sensor error
+537	OXI Liquid Sensor error
+538	pH/BG pump error
+539	El/Met pump error
+541	Solution pump error
+545	General communication error
+547	Temperature error
+556	Inlet Liquid Sensor full after adjustment during Startup
+557	pH/BG upper Liquid Sensor full after adjustment during Startup
+558	El/Met lower Liquid Sensor full after adjustment during Startup
+559	El/Met upper Liquid Sensor full after adjustment during Startup
+562	Oxi Liquid Sensor full after adjustment during Startup
+564	No Cleaning solution detected by OXI liquid sensor during initializing.
+565	No Cleaning solution detected by tHb liquid sensor during initializing
+567	No Cal 2 solution detected by OXI liquid sensor during initializing
+568	No Cal 2 solution detected by tHb liquid sensor during initializing
+569	No Cal 1 solution detected by OXI liquid sensor during initializing
+570	No Cal 1 solution detected by tHb liquid sensor during initializing
+571	No Rinse solution detected by OXI liquid sensor during initializing
+572	No Rinse solution detected by tHb liquid sensor during initializing
+573	OXI Sample spectrum intensity too high
+574	Missing Cal data
+576	Pump calibration error
+577	License key missing
+578	Option management error
+579	Oximetry hardware problem. Not possible to measure.
+580	Oximetry hardware problem. Possible to measure.
+581	OXI spectrum mismatch
+582	tHb calibration outside limits
+583	Measured value outside reportable range for the parameter
+584	Oximetry calibration error
+585	Oximetry measuring error
+586	Oximetry hardware error
+587	Option key error
+588	Measured QC value lower than statistical range
+589	Measured QC value higher than statistical range
+593	Insufficient sample
+595	Liquid sensor calibration error
+597	Liquid detected in pH/BG module during Gas Calibration
+600	Demo option will expire soon
+602	Inlet not filled properly during Rinse
+603	Options being installed
+604	Parameter not installed
+605	Cal expired
+606	Cal expired (pH)
+608	Cal expired (pCO2)
+609	Cal expired (pO2)
+610	Cal expired (K)
+611	Cal expired (Na)
+612	Cal expired (Ca)
+613	Cal expired (Cl)
+614	Cal expired (Glu)
+615	Cal expired (Lac)
+616	Cal expired (OXI)
+618	Waste detector error
+619	Waste container missing
+620	Waste container full
+621	Waste container critically full
+622	Expected liquid level below 0
+623	Solution empty
+624	Solution missing
+628	No Cleaning solution detected by OXI liquid sensor during Refill
+629	No Cleaning solution detected by tHb liquid sensor during Refill
+630	No Cal 2 solution detected by OXI liquid sensor during Refill
+631	No Cal 2 solution detected by tHb liquid sensor during Refill
+632	No Cal 1 solution detected by Oxi liquid sensor during Refill
+633	No Cal 1 solution detected by tHb liquid sensor during Refill
+634	No Rinse solution detected by OXI liquid sensor during Refill
+635	No Rinse solution detected by tHb liquid sensor during Refill
+636	Gas 1 cylinder low pressure.
+637	Gas 2 cylinder low pressure.
+641	ABL/DMS PC restarted
+642	ABL/DMS PC Connected to AU
+643	ABL/DMS PC Disconnected from AU
+644	Missing sample at El/Met module in C95 uL mode
+648	Calibration failed or not accepted
+652	OXI liquid sensor did not receive Rinse from the Fluidic Module
+653	Sample in pH/BG upper liquid sensor detected prematurely during aspiration
+654	Sample in El/Met upper Liquid Sensor detected prematurely during aspiration
+655	Sample in pH/BG upper liquid sensor detected prematurely during aspiration
+656	Sample in OXI liquid sensor detected prematurely during aspiration
+657	TopPlug never reached pH/BG upper Liquid Sensor
+658	Inlet flaps removed
+659	Cover removed or window opened
+660	Inlet calibration error
+661	Leak detected
+662	Barometer out of range
+663	Leakage
+664	Sample problem
+669	QC value outside control range
+671	Analyzing Unit service setup non-default
+672	Inlet error: Pickup offset adjust error
+673	Inlet error: Optic ref point error
+674	Inlet error: No gasket detected
+675	Inlet error: Position calc. error
+676	Inlet error: Sensitivity out of range
+677	Unreliable
+678	Heater error
+679	Barometer error
+680	pH/BG module not active
+681	El/Met module not active
+682	OXI module not active
+683	Inlet module not active
+686	Cal 2 Solution missing - check level in container
+687	Cal 1 Solution missing - check level in container
+688	ctHb/ceHb too low for OXI calculation
+689	Gas pressure offset voltage out of range.
+690	Automatic AU SW Repair
+691	AU in bootstrap mode
+692	ABL not connected to RADIANCE
+693	ABL not connected to RADIANCE - incorrect password
+694	ABL connected to RADIANCE
+695	ABL disconnected from RADIANCE
+696	ABL<>RADIANCE communication error
+697	Requested AutoCheck QC ampoule not present in carousel
+698	Performing AutoCheck on last ampoule in schedule instead of non-present
+699	AutoCheck QC measurement started due to calibration error
+700	Scheduled AutoCheck not run due to errors in last calibration
+703	QC expired
+704	AutoCheck QC measurement is repeated
+705	AutoCheck QC measurement is repeated twice
+707	Replacement(s) overdue by 10%. Analyzer locked.
+708	Corrective action not possible due to empty AutoCheck carousel
+709	El/Met module not expected
+710	OXI module not expected
+711	Warning: DysHb High
+712	FHbF measurement not possible
+713	ctBil measurement not possible
+714	AutoCheck mechanical error
+715	AutoCheck communication error
+716	AutoCheck cover missing
+717	Carousel packing not optimal
+718	AutoCheck carousel will need refilling soon
+719	Insufficient sample in pH/BG module
+720	Insufficient sample in El/Met module
+721	Insufficient sample in Future module
+722	Sample error
+723	No Cleaning solution detected by Inlet during Startup
+724	No Cal 2 solution detected by Inlet during Startup
+725	No Cal 1 solution detected by Inlet during Startup
+726	No Rinse solution detected by Inlet during Startup
+727	No Cleaning solution detected by Inlet during Refill
+728	No Cal 2 solution detected by Inlet during Refill
+729	No Cal 1 solution detected by Inlet during Refill
+730	No Rinse solution detected by Inlet during Refill
+733	New part installed
+734	DMS not connected to Analyzing Unit
+735	Ampoule temperature error
+736	Unstable AutoCheck temperature
+737	Calibration solution missing. Check level in container
+738	Ampoule(s) in AutoCheck carousel not installed
+739	Solution's composition not identifiable
+740	AutoCheck cover failure
+741	AutoCheck Ampoule House failure
+742	AutoCheck Carousel failure
+743	AutoCheck Breaker failure
+744	AutoCheck Laser Setup Error
+745	Low hard disk space
+746	Rinse Solution low warning
+747	Cal1 Solution low warning
+748	Cal2 Solution low warning
+749	Cleaning Solution low warning
+750	Solution projection adjusted
+751
+752	Cal3 Solution low warning
+753	Service Electrode Updatings enabled
+754	Cal expired (Urea)
+755	tHb hardware problem
+756	tHb offset compensation out of range
+757	tHb dark signal unstable
+758	tHb dark signal too low
+759	tHb dark signal too high
+760	tHb light level too low
+761	tHb light level too high
+762	tHb Liquid Sensor error
+763	AutoCheck temperature out of required range
+764	Liquid detected in pH/BG module during Expired Air Sample
+765	Inlet flow impeded
+766	ABL not connected to RADIANCE - no RADIANCE connection license
+767	ABL not connected to RADIANCE - ABL StatLink version too high
+768	ABL not connected to RADIANCE - ABL StatLink version too low
+769	ABL<>RADIANCE communication error - XML packet could not be parsed
+770	Failed to restore Custom Setup
+771	Succeded to restore Custom Setup
+772	User Activity:
+773	Remote operator logged on with user:
+774	Remote operator logged off with user:
+775	Failed to restore Default Setup
+776	Succeded to restore Default Setup
+777	Database upgrade running in background
+778	Inlet gasket should be replaced soon
+779	Cleaning failed
+780	RADIANCE communication enabled
+781	RADIANCE communication disabled
+782	RADIANCE output queue cleared
+783	Automatic backup started
+785	Automatic archiving started
+786	Automatic archiving completed
+787	Export of data logs started
+788	Hypochlorite detected - remembrane Glu, Lac and Cl electrodes
+789	RADIANCE only: ? on parameter
+790	Adaptive measuring mode applied
+791	Parameter could not be measured
+792	Inlet lower Liquid Sensor error
+793	pH/BG pump asymmetry error
+794	El/Met pump asymmetry error
+795	Future pump asymmetry error
+796	Solution pump asymmetry error
+797	Waste pump asymmetry error
+798	User logged on
+799	User logged off
+800	Logon attempt failed
+801	Hard disk S.M.A.R.T. threshold(s) exceeded
+802	pH-only sample handling adapted to 35uL range
+803	pH-only sample handling adapted to 40uL range
+804	pH-only sample handling adapted to 55uL range
+805	Adaptive measuring mode applied (decay to pH/BG/Met/Oxi)
+806	Adaptive measuring mode applied (decay to all micro mode)
+807	Unauthorized software
+808	Calibration drift not available
+809	Service Electrode Updatings disabled
+810	pH locked
+811	pCO2 locked
+812	pO2 locked
+813	K locked
+814	Na locked
+815	Cl locked
+816	Ca locked
+817	Xx locked
+818	Glu locked
+819	Lac locked
+820	tHb locked
+821	MetHb locked
+822	COHb locked
+823	HHb locked
+824	O2Hb locked
+825	sO2 locked
+826	HbF locked
+827	tBil locked
+828	Xxxx locked
+829	Xxxxxxx locked
+830	Xxxx locked
+831	pH unlocked
+832	pCO2 unlocked
+833	pO2 unlocked
+834	K unlocked
+835	Na unlocked
+836	Cl unlocked
+837	Ca unlocked
+838	Xx unlocked
+839	Glu unlocked
+840	Lac unlocked
+841	tHb unlocked
+842	MetHb unlocked
+843	COHb unlocked
+844	HHb unlocked
+845	O2Hb unlocked
+846	sO2 unlocked
+847	HbF unlocked
+848	tBil unlocked
+849	Xxxx unlocked
+850	Xxxxxxxx unlocked
+851	Xxxx unlocked
+852	Radiance:
+853	LIS/HIS: Missing Communication Option Key
+854	No leading air segment in inlet's lower liquid sensor within time frame
+855	Base Excess out of range
+862	pH-only sample handling adapted to 35uL range
+864	pH-only sample handling adapted to 55uL range
+865	pH/BG sample handling adapted to 35uL range (decay to pH only)
+866	pH/BG sample handling adapted to 40uL range (decay to pH only)
+867	pH/BG sample handling adapted to 55uL range
+868	pH/BG/Oxi sample handling adapted to 55uL range
+869	Adaptive sample handling applied (decay to pH/Oxi without Bil)
+870	Adaptive sample handling applied (decay to pH/Oxi)
+871	Adaptive sample handling applied (decay to pH/BG/Oxi)
+872	Adaptive sample handling applied (decay to pH/BG/Oxi (2))
+873	Adaptive measuring mode applied (decay to pH/BG/Met/Oxi)
+874	Adaptive measuring mode applied (decay to all micro mode)
+875	Sample aged
+876	FLEXQ positioning warning
+877	FLEXQ positioning error
+878	No Rinse solution during calibration
+879	No Cal1 solution during calibration
+880	No Cal2 solution during calibration
+881	LIS/HIS: Missing CIC Communication Option Key
+882	Mixer tray slip detected
+883	Mixer error
+884	Sampler tray adjustment needed
+885	Cyclic QC schedule reset from Radiance
+886	LIS/HIS: No valid POCT1A DML Device ID file
+963	Leak currents detected
+969	FLEXQ module not expected

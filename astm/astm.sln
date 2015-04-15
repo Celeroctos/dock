@@ -1,0 +1,46 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ASTM_E1381", "ASTM_E1381\ASTM_E1381.vcproj", "{8EF09CD9-DA20-4BED-B934-F4318E59339A}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "com2tcp", "com2tcp\com2tcp.vcproj", "{4DF5E603-9690-4C6F-8C66-1D16613BCB17}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{8AED1021-20CF-477C-B636-9EBBC31C65A6}"
+	ProjectSection(SolutionItems) = preProject
+		ASTM_E1381_EXT.h = ASTM_E1381_EXT.h
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "test", "test\test.vcproj", "{D970B783-03C7-4C83-B272-4B678F2D8F23}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ASTM", "ASTM\ASTM.vcproj", "{427E4DF9-B33C-403D-ACE1-969D9F7FCC77}"
+	ProjectSection(ProjectDependencies) = postProject
+		{8EF09CD9-DA20-4BED-B934-F4318E59339A} = {8EF09CD9-DA20-4BED-B934-F4318E59339A}
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{8EF09CD9-DA20-4BED-B934-F4318E59339A}.Debug|Win32.ActiveCfg = Debug|Win32
+		{8EF09CD9-DA20-4BED-B934-F4318E59339A}.Debug|Win32.Build.0 = Debug|Win32
+		{8EF09CD9-DA20-4BED-B934-F4318E59339A}.Release|Win32.ActiveCfg = Release|Win32
+		{8EF09CD9-DA20-4BED-B934-F4318E59339A}.Release|Win32.Build.0 = Release|Win32
+		{4DF5E603-9690-4C6F-8C66-1D16613BCB17}.Debug|Win32.ActiveCfg = Debug|Win32
+		{4DF5E603-9690-4C6F-8C66-1D16613BCB17}.Debug|Win32.Build.0 = Debug|Win32
+		{4DF5E603-9690-4C6F-8C66-1D16613BCB17}.Release|Win32.ActiveCfg = Release|Win32
+		{4DF5E603-9690-4C6F-8C66-1D16613BCB17}.Release|Win32.Build.0 = Release|Win32
+		{D970B783-03C7-4C83-B272-4B678F2D8F23}.Debug|Win32.ActiveCfg = Debug|Win32
+		{D970B783-03C7-4C83-B272-4B678F2D8F23}.Debug|Win32.Build.0 = Debug|Win32
+		{D970B783-03C7-4C83-B272-4B678F2D8F23}.Release|Win32.ActiveCfg = Release|Win32
+		{D970B783-03C7-4C83-B272-4B678F2D8F23}.Release|Win32.Build.0 = Release|Win32
+		{427E4DF9-B33C-403D-ACE1-969D9F7FCC77}.Debug|Win32.ActiveCfg = Debug|Win32
+		{427E4DF9-B33C-403D-ACE1-969D9F7FCC77}.Debug|Win32.Build.0 = Debug|Win32
+		{427E4DF9-B33C-403D-ACE1-969D9F7FCC77}.Release|Win32.ActiveCfg = Release|Win32
+		{427E4DF9-B33C-403D-ACE1-969D9F7FCC77}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
