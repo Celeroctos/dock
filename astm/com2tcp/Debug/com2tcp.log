@@ -1,0 +1,28 @@
+﻿Сборка начата 2015-04-15 5:44:03 PM.
+     1>Проект "d:\code\Java\dock\astm\com2tcp\com2tcp.vcxproj" в узле 3 (целевые объекты Rebuild).
+     1>ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /I"C:\Program Files (x86)\Visual Leak Detector\include" /ZI /nologo /W4 /WX- /Od /Oy- /D _CRT_SECURE_NO_DEPRECATE /D _VC80_UPGRADE=0x0600 /D _MBCS /Gm /EHsc /RTC1 /MTd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo".\Debug/" /Fd".\Debug/vc120.pdb" /FR".\Debug\\" /Gd /TP /analyze- /errorReport:prompt com2tcp.cpp telnet.cpp utils.cxx
+         utils.cxx
+         telnet.cpp
+         com2tcp.cpp
+     1>d:\code\java\dock\astm\com2tcp\com2tcp.cpp(629): warning C4996: 'inet_addr': Use inet_pton() or InetPton() instead or define _WINSOCK_DEPRECATED_NO_WARNINGS to disable deprecated API warnings
+                 c:\program files (x86)\windows kits\8.1\include\um\winsock2.h(1850): см. объявление "inet_addr"
+     1>d:\code\java\dock\astm\com2tcp\com2tcp.cpp(632): warning C4996: 'gethostbyname': Use getaddrinfo() or GetAddrInfoW() instead or define _WINSOCK_DEPRECATED_NO_WARNINGS to disable deprecated API warnings
+                 c:\program files (x86)\windows kits\8.1\include\um\winsock2.h(2238): см. объявление "gethostbyname"
+         Создание кода...
+       ResourceCompile:
+         C:\Program Files (x86)\Windows Kits\8.1\bin\x86\rc.exe /D _DEBUG /D _VC80_UPGRADE=0x0600 /l"0x0419" /nologo /fo".\Debug\com2tcp.res" com2tcp.rc 
+       Link:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:".\Debug/com2tcp.exe" /INCREMENTAL /NOLOGO /LIBPATH:"C:\Program Files (x86)\Visual Leak Detector\lib\Win32" ws2_32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:".\Debug/com2tcp.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE:NO /IMPLIB:".\Debug\com2tcp.lib" /MACHINE:X86 /SAFESEH .\Debug\com2tcp.res
+         .\Debug/com2tcp.obj
+         .\Debug/telnet.obj
+         .\Debug/utils.obj
+     1>com2tcp.obj : warning LNK4075: не учитывается "/EDITANDCONTINUE" из-за спецификации "/SAFESEH"
+         com2tcp.vcxproj -> d:\code\Java\dock\astm\com2tcp\.\Debug\com2tcp.exe
+       BscMake:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\bscmake.exe /nologo /o".\Debug/com2tcp.bsc" .\Debug\com2tcp.sbr .\Debug\telnet.sbr .\Debug\utils.sbr
+     1>Сборка проекта "d:\code\Java\dock\astm\com2tcp\com2tcp.vcxproj" завершена (целевые объекты Rebuild).
+
+Сборка успешно завершена.
+
+Затраченное время: 00:00:14.31

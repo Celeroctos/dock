@@ -1,11 +1,15 @@
 #include "stdafx.h"
 #include <stdio.h>
 #include <stdlib.h>
-#include <libpq-fe.h>
+
+#if 0
+#  include <libpq-fe.h>
+#else
+#  include "../include/libpq-fe.h"
+#endif
 
 #include "ASTM_E1384_INT.h"
 #include "pg_lis.h"
-//#pragma comment(lib, "C:\\Program Files (x86)\\PostgreSQL\\9.4\\lib\\libpq.lib")
 
 using namespace std;
 
